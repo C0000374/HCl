@@ -2,6 +2,7 @@ package net.minecraft.client;
 
 import io.github.C0000374.HCl.CClient;
 import io.github.C0000374.HCl.Gui.CConsole;
+import io.github.C0000374.HCl.Gui.CClickGui;
 import io.github.C0000374.HCl.Modules.Render.FreeCamera.CFreeCamera;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -167,6 +168,7 @@ public abstract class Minecraft implements Runnable {
     long systemTime = System.currentTimeMillis();
     private int joinPlayerCounter = 0;
     public CClient Client = new CClient(this);
+    public CClickGui ClickGui;
 
     public Minecraft(Component var1, Canvas var2, MinecraftApplet var3, int var4, int var5, boolean var6) {
         StatList.func_27360_a();
@@ -296,6 +298,7 @@ public abstract class Minecraft implements Runnable {
         }
 
         this.checkGLError("Post startup");
+        this.ClickGui = new CClickGui(this);
         this.ingameGUI = new GuiIngame(this);
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(this, this.serverName, this.serverPort));
@@ -1075,6 +1078,7 @@ public abstract class Minecraft implements Runnable {
                                                 }
                                                 
                                                 if (Keyboard.getEventKey() == Keyboard.KEY_Y) this.displayGuiScreen(new CConsole());
+                                                if (Keyboard.getEventKey() == Keyboard.KEY_RSHIFT) this.displayGuiScreen(this.ClickGui);
                                                 
                                                 this.Client.UI$HandleKeyEvent(Keyboard.getEventKey());
                                             }

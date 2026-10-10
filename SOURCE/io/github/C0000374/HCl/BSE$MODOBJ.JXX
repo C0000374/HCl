@@ -17,6 +17,7 @@ package io.github.C0000374.HCl;
 
 #include <HCL.INC>
 
+import io.github.C0000374.HCl.Gui.CCategory;
 import java.util.HashMap;
 
 public abstract class BSE$MODOBJ {
@@ -26,6 +27,7 @@ public abstract class BSE$MODOBJ {
     public int KeyBinding;
     public HashMap<String, BSE$STGOBJ> Settings = new HashMap<>();
     public long EventsMask;
+    public CCategory Category;
     
     public
     BSE$MODOBJ(

@@ -1,0 +1,28 @@
+package io.github.C0000374.HCl.Gui;
+
+import io.github.C0000374.HCl.BSE$MODOBJ;
+import java.util.ArrayList;
+
+public final class CCategory {
+
+    public String Id;
+    public int Color;
+    public BSE$MODOBJ[] Modules;
+    
+    public
+    CCategory(
+        String Id,
+        int ColoUWUr,
+        BSE$MODOBJ[] Modules
+        )
+    {
+        int I;
+        
+        this.Id = Id;
+        this.Color = ColoUWUr;
+        this.Modules = Modules;
+        
+        for (I = 0; I < Modules.length; I++) Modules[I].Category = this;
+        return;
+    }
+}

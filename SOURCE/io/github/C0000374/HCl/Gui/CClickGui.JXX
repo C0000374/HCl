@@ -1,0 +1,1057 @@
+package io.github.C0000374.HCl.Gui;
+
+import io.github.C0000374.HCl.CClient;
+import io.github.C0000374.HCl.BSE$MODOBJ;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.GuiScreen;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
+#include <HCL.INC>
+
+#define CS_VALIDFLAGS   0
+
+final class CLASSOBJ {
+    public String ClassId;
+    public ACWindowProcedure WindowProcedure;
+    public int Flags;
+}
+
+#define WM_LEFTBUTTONDOWN   0
+#define WM_RIGHTBUTTONDOWN  1
+#define WM_LEFTBUTTONUP     2
+#define WM_RIGHTBUTTONUP    3
+#define WM_MOUSEMOVE        4
+#define WM_KEYDOWN          0x20
+#define WM_KEYUP            0x21
+#define WM_PAINT            0x30
+#define WM_CONTROL          0x31
+#define WM_DESTROY          0x33
+#define WM_CREATE           0x35
+
+#define WS_CAPTION          1
+#define WS_MINIMIZEBOX      2
+#define WS_CLOSEBOX         4
+#define WS_VALIDFLAGS   (WS_MINIMIZEBOX | WS_CAPTION | WS_CLOSEBOX)
+
+final class WINDOWOBJ {
+    public CLASSOBJ ClassObj;
+    public int Width;
+    public int Height;
+    public int X;
+    public int Y;
+    public int hParent;
+    public String Title;
+    public int Flags;
+    public ArrayList<Integer> hChildren;
+    public boolean IsMinimized;
+    public int OldHeight;
+    public Object WindowData;
+}
+
+abstract class ACWindowProcedure {
+    
+    public CClickGui Services;
+    
+    public
+    ACWindowProcedure(
+        )
+    {
+        this.Services = CClickGui.Instance;
+        return;
+    }
+    
+    public
+    abstract
+    void
+    WindowProcedure(
+        int hWindow,
+        int MessageId,
+        Object wParam,
+        Object lParam
+        );
+}
+
+#define H2I(H) ((H) - 1)
+#define I2H(I) ((I) + 1)
+
+public final class CClickGui extends GuiScreen {
+    
+    public Minecraft MinecraftInstance;
+    public HashMap<String, CLASSOBJ> WM$ClassList = new HashMap<>();
+    public ArrayList<WINDOWOBJ> WM$WindowList = new ArrayList<>();
+    public int WM$DrawX = 0;
+    public int WM$DrawY = 0;
+    public ArrayList<Integer> WM$ZList = new ArrayList<>(); 
+    public int WM$LastMouseX = 0;
+    public int WM$LastMouseY = 0;
+    public boolean WM$HasFocusWindow = false;
+    public boolean WM$IsDraggingWindow = false;
+    public int WM$LastWindowX;
+    public int WM$LastWindowY;
+    public int WM$WindowToDrag;
+    public static CClickGui Instance;
+    public int WM$LastWindow = 0;
+    
+    public
+    CClickGui(
+        Minecraft MinecraftInstance
+        )
+    {
+        Iterator<CCategory> I;
+        CCategory Category;
+        int Y;
+        int hWindow;
+        
+        this.MinecraftInstance = MinecraftInstance;
+        Instance = this;
+        this.WM$RegisterClass("CToggleButton", new CToggleButton(), 0);
+        this.WM$RegisterClass("CCategoryWindow", new CCategoryWindow(), 0);
+        
+        I = this.MinecraftInstance.Client.Categories.values().iterator();
+        Y = 0;
+        while (I.hasNext()) {
+            Category = I.next();
+            
+            hWindow = this.WM$CreateWindow(
+                Category.Id,
+                "CCategoryWindow",
+                WS_MINIMIZEBOX | WS_CAPTION,
+                0,
+                20,
+                Y,
+                100,
+                16,
+                Category
+            );
+            this.WM$MinimizeOrMaximizeWindow(hWindow);
+            Y += 20;
+        }
+        return;
+    }
+    
+    @Override
+    public
+    boolean
+    doesGuiPauseGame(
+        )
+    {
+        return false;
+    }
+    
+    @Override
+    public void
+    drawScreen(
+        int i0,
+        int i1,
+        float f0
+        )
+    {
+        int i;
+        
+        super.drawScreen(i0, i1, f0);
+        for (i = 0; i < this.WM$ZList.size(); i++) this.WM$DrawWindow(this.WM$ZList.get(i));
+        return;
+    }
+    
+    @Override
+    public void
+    handleKeyboardInput(
+        )
+    {
+        int MessageId;
+        int wParam;
+        char lParam;
+        WINDOWOBJ WindowObj;
+        int hWindow;
+
+        super.handleKeyboardInput();
+        
+        if (this.WM$ZList.size() == 0) return;
+        if (!this.WM$HasFocusWindow) return;
+        
+        MessageId = Keyboard.getEventKeyState()? WM_KEYDOWN: WM_KEYUP;
+        wParam = Keyboard.getEventKey();
+        lParam = Keyboard.getEventCharacter();
+        
+        WindowObj = this.WM$WindowList.get(H2I(this.WM$ZList.get(this.WM$ZList.size() - 1)));
+        if (WindowObj.IsMinimized) return;
+        WindowObj.ClassObj.WindowProcedure.WindowProcedure(
+            this.WM$ZList.get(this.WM$ZList.size() - 1),
+            MessageId,
+            wParam,
+            lParam
+        );
+        
+        while (WindowObj.hChildren.size() != 0) {
+            
+            hWindow = WindowObj.hChildren.get(WindowObj.hChildren.size() - 1);
+            WindowObj = this.WM$WindowList.get(H2I(hWindow));
+            if (WindowObj.IsMinimized) return;
+            WindowObj.ClassObj.WindowProcedure.WindowProcedure(
+                hWindow,
+                MessageId,
+                wParam,
+                lParam
+            );
+        }
+        return;
+    }
+    
+    @Override
+    public void
+    handleMouseInput(
+        )
+    {
+        int MouseX;
+        int MouseY;
+        int MessageId;
+        int hWindow;
+        WINDOWOBJ WindowObj;
+        boolean bStatus;
+        boolean IsBox1Pressed;
+        boolean IsBox2Pressed;
+        
+        super.handleMouseInput();
+        MouseX = Mouse.getEventX() * this.width / this.mc.displayWidth;
+        MouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+        
+        if (Mouse.getEventButtonState()) 
+            switch (Mouse.getEventButton()) {
+            case 0:
+                MessageId = WM_LEFTBUTTONDOWN;
+                break;
+
+            case 1:
+                MessageId = WM_RIGHTBUTTONDOWN;
+                break;
+
+            default:
+                return;
+            }
+        else switch (Mouse.getEventButton()) {
+        case 0:
+            MessageId = WM_LEFTBUTTONUP;
+            break;
+
+        case 1:
+            MessageId = WM_RIGHTBUTTONUP;
+            break;
+            
+        case -1:
+            MessageId = WM_MOUSEMOVE;
+            this.WM$LastMouseX = MouseX;
+            this.WM$LastMouseY = MouseY;
+            break;
+
+        default:
+            return;
+        }
+        
+        if (!this.WM$IsDraggingWindow) {
+            hWindow = this.WM$GetWindowByCoords(this.WM$LastMouseX, this.WM$LastMouseY);
+        
+            if (MessageId == WM_LEFTBUTTONDOWN || MessageId == WM_RIGHTBUTTONDOWN) this.WM$SetFocusWindow_Internal(hWindow);
+            
+            if (hWindow != this.WM$LastWindow) {
+                if (this.WM$LastWindow != 0) this.WM$CallWindowProcedure(
+                        this.WM$LastWindow,
+                        WM_MOUSEMOVE,
+                        -1,
+                        -1
+                    );
+                this.WM$LastWindow = hWindow;
+            }
+        
+            if (hWindow != 0) {
+            
+                WindowObj = this.WM$WindowList.get(H2I(hWindow));
+                if ((WindowObj.Flags & WS_CAPTION) != 0) {
+                    
+                    IsBox1Pressed = this.WM$IsPointInRectangle(
+                        this.WM$XCoordToLocal(this.WM$LastMouseX, hWindow),
+                        this.WM$YCoordToLocal(this.WM$LastMouseY, hWindow),
+                        WindowObj.Width - 30,
+                        2,
+                        12,
+                        12
+                    ) && MessageId == WM_LEFTBUTTONDOWN;
+                    
+                    IsBox2Pressed = this.WM$IsPointInRectangle(
+                        this.WM$XCoordToLocal(this.WM$LastMouseX, hWindow),
+                        this.WM$YCoordToLocal(this.WM$LastMouseY, hWindow),
+                        WindowObj.Width - 14,
+                        2,
+                        12,
+                        12
+                    ) && MessageId == WM_LEFTBUTTONDOWN;
+                    
+                    if ((WindowObj.Flags & WS_CLOSEBOX) != 0 && (WindowObj.Flags & WS_MINIMIZEBOX) != 0) {
+                        
+                        if (IsBox1Pressed) {
+                            
+                            WindowObj.IsMinimized = !WindowObj.IsMinimized;
+                            if (WindowObj.IsMinimized) {
+                                WindowObj.OldHeight = WindowObj.Height;
+                                WindowObj.Height = 16;
+                            }
+                            else WindowObj.Height = WindowObj.OldHeight;
+                            return;
+                        }
+                        if (IsBox2Pressed) {
+                            
+                            this.WM$DestroyWindow(hWindow);
+                            return;
+                        }
+                    }
+                    else if ((WindowObj.Flags & WS_CLOSEBOX) != 0 && IsBox2Pressed) {
+                        
+                        this.WM$DestroyWindow(hWindow);
+                        return;
+                    }
+                    else if ((WindowObj.Flags & WS_MINIMIZEBOX) != 0 && IsBox2Pressed) {
+
+                        WindowObj.IsMinimized = !WindowObj.IsMinimized;
+                        if (WindowObj.IsMinimized) {
+                            WindowObj.OldHeight = WindowObj.Height;
+                            WindowObj.Height = 16;
+                        }
+                        else WindowObj.Height = WindowObj.OldHeight;
+                        return;
+                    }
+                    
+                    bStatus = this.WM$IsPointInRectangle(
+                        this.WM$XCoordToLocal(this.WM$LastMouseX, hWindow),
+                        this.WM$YCoordToLocal(this.WM$LastMouseY, hWindow),
+                        0,
+                        0,
+                        WindowObj.Width,
+                        16
+                    );
+                    if (bStatus && MessageId == WM_LEFTBUTTONDOWN) {
+                        this.WM$LastWindowX = this.WM$XCoordToLocal(this.WM$LastMouseX, hWindow);
+                        this.WM$LastWindowY = this.WM$YCoordToLocal(this.WM$LastMouseY, hWindow);
+                        this.WM$IsDraggingWindow = true;
+                        this.WM$WindowToDrag = hWindow;
+                    } 
+                    else WindowObj.ClassObj.WindowProcedure.WindowProcedure(
+                        hWindow,
+                        MessageId,
+                        this.WM$XCoordToLocal(this.WM$LastMouseX, hWindow),
+                        this.WM$YCoordToLocal(this.WM$LastMouseY, hWindow) - 16
+                    );
+                }
+                else WindowObj.ClassObj.WindowProcedure.WindowProcedure(
+                    hWindow,
+                    MessageId,
+                    this.WM$XCoordToLocal(this.WM$LastMouseX, hWindow),
+                    this.WM$YCoordToLocal(this.WM$LastMouseY, hWindow)
+                );
+            }
+        }
+        else switch (MessageId) {
+        case WM_LEFTBUTTONUP:
+            this.WM$IsDraggingWindow = false;
+            break;
+
+        case WM_MOUSEMOVE:
+            this.WM$MoveWindow_A(
+                this.WM$WindowToDrag,
+                this.WM$LastMouseX - this.WM$LastWindowX,
+                this.WM$LastMouseY - this.WM$LastWindowY
+            );
+            break;
+
+        default:
+            return;
+        }
+        return;
+    }
+    
+    //++
+    //
+    // win mgr
+    //
+    //--
+    
+    public
+    boolean
+    WM$RegisterClass(
+        String ClassId,
+        ACWindowProcedure WindowProcedure,
+        int Flags
+        )
+    {
+        CLASSOBJ ClassObj;
+        
+        if ((Flags & ~CS_VALIDFLAGS) != 0) return false;
+        
+        ClassId = ClassId.toUpperCase();
+        if (this.WM$ClassList.get(ClassId) != null) return false;
+        
+        ClassObj = new CLASSOBJ();
+        ClassObj.ClassId = ClassId;
+        ClassObj.WindowProcedure = WindowProcedure;
+        ClassObj.Flags = Flags;
+        
+        this.WM$ClassList.put(ClassId, ClassObj);
+        return true;
+    }
+    
+    public
+    int
+    WM$CreateWindow(
+        String Title,
+        String ClassId,
+        int Flags,
+        int hParent,
+        int X,
+        int Y,
+        int Width,
+        int Height,
+        Object lParam
+        )
+    {
+        WINDOWOBJ WindowObj;
+        CLASSOBJ ClassObj;
+        int hWindow;
+        int i;
+        
+        ClassId = ClassId.toUpperCase();
+        if ((Flags & ~WS_VALIDFLAGS) != 0) return 0;
+        
+        ClassObj = this.WM$ClassList.get(ClassId);
+        if (ClassObj == null) return 0;
+        
+        WindowObj = new WINDOWOBJ();
+        WindowObj.ClassObj = ClassObj;
+        WindowObj.Width = Width;
+        WindowObj.Height = Height;
+        WindowObj.X = X;
+        WindowObj.Y = Y;
+        WindowObj.hParent = hParent;
+        WindowObj.Title = Title;
+        WindowObj.Flags = Flags;
+        WindowObj.hChildren = new ArrayList<Integer>();
+        WindowObj.IsMinimized = false;
+        WindowObj.WindowData = null;
+        
+        hWindow = 0;
+        for (i = 0; i < this.WM$WindowList.size(); i++) 
+            if (this.WM$WindowList.get(i) == null) {
+            
+                this.WM$WindowList.set(i, WindowObj);
+                hWindow = I2H(i);
+                break;
+            }
+        if (hWindow == 0) {
+            this.WM$WindowList.add(WindowObj);
+            hWindow = I2H(i);
+        }
+        
+        if (hParent != 0) this.WM$WindowList.get(H2I(hParent)).hChildren.add(hWindow);
+        else this.WM$ZList.add(hWindow);
+        ClassObj.WindowProcedure.WindowProcedure(hWindow, WM_CREATE, null, lParam);
+        return hWindow;
+    }
+    
+    public
+    void
+    WM$DrawWindow(
+        int hWindow
+        )
+    {
+        WINDOWOBJ WindowObj;
+        int i;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        this.WM$DrawX = 0;
+        this.WM$DrawY = 0;
+        this.WM$GetDrawCoords(WindowObj);
+
+        if ((WindowObj.Flags & WS_CAPTION) != 0) {
+
+            this.WM$DrawRectangle(0, 0, WindowObj.Width, 16, 0xFFFF0000);
+            this.WM$DrawString(WindowObj.Title, 4, 4, 0xFFFFFF);
+
+            if ((WindowObj.Flags & WS_CLOSEBOX) != 0 && (WindowObj.Flags & WS_MINIMIZEBOX) != 0) {
+
+                this.WM$DrawRectangle(WindowObj.Width - 14, 2, WindowObj.Width - 2, 14, 0xFF000000);
+                this.WM$DrawString("x", WindowObj.Width - 11, 4, 0xFFFFFF);
+                this.WM$DrawRectangle(WindowObj.Width - 30, 2, WindowObj.Width - 18, 14, 0xFF000000);
+                this.WM$DrawString("-", WindowObj.Width - 27, 4, 0xFFFFFF);
+            }
+            else if ((WindowObj.Flags & WS_CLOSEBOX) != 0) {
+
+                this.WM$DrawRectangle(WindowObj.Width - 14, 2, WindowObj.Width - 2, 14, 0xFF000000);
+                this.WM$DrawString("x", WindowObj.Width - 11, 4, 0xFFFFFF);
+            }
+            else if ((WindowObj.Flags & WS_MINIMIZEBOX) != 0) {
+
+                this.WM$DrawRectangle(WindowObj.Width - 14, 2, WindowObj.Width - 2, 14, 0xFF000000);
+                this.WM$DrawString("-", WindowObj.Width - 11, 4, 0xFFFFFF);
+            }
+
+            if (WindowObj.IsMinimized) return;
+            this.WM$DrawY += 16;
+            this.WM$DrawGradientRectangle(0, 0, WindowObj.Width, WindowObj.Height - 16, -1072689136, -804253680);
+        }
+
+        WindowObj.ClassObj.WindowProcedure.WindowProcedure(hWindow, WM_PAINT, null, null);
+        
+        for (i = 0; i < WindowObj.hChildren.size(); i++) this.WM$DrawWindow(WindowObj.hChildren.get(i));
+        return;
+    }
+    
+    public
+    void
+    WM$GetDrawCoords(
+        WINDOWOBJ WindowObj
+        )
+    {        
+        this.WM$DrawX += WindowObj.X;
+        this.WM$DrawY += WindowObj.Y;
+        if (WindowObj.hParent != 0)
+            this.WM$GetDrawCoords(this.WM$WindowList.get(H2I(WindowObj.hParent)));
+        return;
+    }
+    
+    public
+    void
+    WM$DrawHorizontalLine(
+        int X1,
+        int X2,
+        int Y,
+        int Color
+        )
+    {
+        this.drawHorizontalLine(this.WM$DrawX + X1, this.WM$DrawX + X2, this.WM$DrawY + Y, Color);
+        return;
+    }
+    
+    public
+    void
+    WM$DrawVerticalLine(
+        int X,
+        int Y1,
+        int Y2,
+        int Color
+        )
+    {
+        this.drawVerticalLine(this.WM$DrawX + X, this.WM$DrawY + Y1, this.WM$DrawY + Y2, Color);
+        return;
+    }
+    
+    public
+    void
+    WM$DrawRectangle(
+        int X1,
+        int Y1,
+        int X2,
+        int Y2,
+        int Color
+        )
+    {
+        this.drawRect(this.WM$DrawX + X1, this.WM$DrawY + Y1, this.WM$DrawX + X2, this.WM$DrawY + Y2, Color);
+        return;
+    }
+    
+    public
+    void
+    WM$DrawGradientRectangle(
+        int X1,
+        int Y1,
+        int X2,
+        int Y2,
+        int Color1,
+        int Color2
+        )
+    {
+        this.drawGradientRect(this.WM$DrawX + X1, this.WM$DrawY + Y1, this.WM$DrawX + X2, this.WM$DrawY + Y2, Color1, Color2);
+        return;
+    }
+    
+    public
+    void
+    WM$DrawCenteredString(
+        String Str,
+        int X,
+        int Y,
+        int Color
+        )
+    {
+        this.drawCenteredString(this.MinecraftInstance.fontRenderer, Str, this.WM$DrawX + X, this.WM$DrawY + Y, Color);
+        return;
+    }
+
+    public
+    void
+    WM$DrawString(
+        String Str,
+        int X,
+        int Y,
+        int Color
+        )
+    {
+        this.drawString(this.MinecraftInstance.fontRenderer, Str, this.WM$DrawX + X, this.WM$DrawY + Y, Color);
+        return;
+    }
+
+    public
+    void
+    WM$DrawTexturedModalRectangle(
+        int X,
+        int Y,
+        int U,
+        int V,
+        int Width,
+        int Height
+        )
+    {
+        this.drawTexturedModalRect(this.WM$DrawX + X, this.WM$DrawY + Y, U, V, Width, Height);
+        return;
+    }
+    
+    public
+    int
+    WM$GetFocusWindow(
+        )
+    {
+        return this.WM$ZList.get(this.WM$ZList.size() - 1);
+    }
+    
+    public
+    void
+    WM$SetFocusWindow_Internal(
+        int hWindow
+        )
+    {
+        WINDOWOBJ WindowObj;
+        WINDOWOBJ ParentWindowObj;
+        int i;
+        
+        if (hWindow == 0) this.WM$HasFocusWindow = false;
+        else {
+            WindowObj = this.WM$WindowList.get(H2I(hWindow));
+            
+            if (WindowObj.hParent == 0) {
+            
+                for (i = 0; i < this.WM$ZList.size(); i++) if (this.WM$ZList.get(i) == hWindow) break;
+                for (; i < this.WM$ZList.size() - 1; i++) this.WM$ZList.set(i, this.WM$ZList.get(i + 1));
+                this.WM$ZList.set(i, hWindow);
+            }
+            else {
+                ParentWindowObj = this.WM$WindowList.get(H2I(WindowObj.hParent));
+                for (i = 0; i < ParentWindowObj.hChildren.size(); i++) if (ParentWindowObj.hChildren.get(i) == hWindow) break;
+                for (; i < ParentWindowObj.hChildren.size() - 1; i++) ParentWindowObj.hChildren.set(i, ParentWindowObj.hChildren.get(i + 1));
+                ParentWindowObj.hChildren.set(i, hWindow);
+                this.WM$SetFocusWindow_Internal(WindowObj.hParent);
+            }
+            
+            this.WM$HasFocusWindow = true;
+        }
+        return;
+    }
+    
+    public
+    void
+    WM$SetFocusWindow(
+        int hWindow
+        )
+    {
+        if (hWindow == 0) this.WM$HasFocusWindow = false;
+        if (this.WM$WindowList.get(H2I(hWindow)).hParent == 0) this.WM$SetFocusWindow_Internal(hWindow);
+        return;
+    }
+    
+    public
+    boolean
+    WM$IsPointInRectangle(
+        int PointX,
+        int PointY,
+        int RectangleX,
+        int RectangleY,
+        int RectangleWidth,
+        int RectangleHeight
+        )
+    {
+        if (PointX >= RectangleX && PointY >= RectangleY && PointX < (RectangleX + RectangleWidth) && PointY < (RectangleY + RectangleHeight)) return true;
+        return false;
+    }
+    
+    public
+    boolean
+    WM$IsPointInWindow(
+        int PointX,
+        int PointY,
+        int hWindow
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        return WM$IsPointInRectangle(
+            PointX,
+            PointY,
+            WindowObj.X,
+            WindowObj.Y,
+            WindowObj.Width,
+            WindowObj.Height
+        );
+    }
+    
+    public
+    int
+    WM$GetWindowByCoords_Internal(
+        int hParent,
+        int X,
+        int Y
+        )
+    {
+        WINDOWOBJ ParentWindowObj;
+        WINDOWOBJ ChildWindowObj;
+        int i;
+        boolean bStatus;
+        int hWindow;
+        
+        ParentWindowObj = this.WM$WindowList.get(H2I(hParent));
+        if (ParentWindowObj.hChildren.size() == 0) return hParent;
+        
+        for (i = ParentWindowObj.hChildren.size() - 1; i >= 0; i--) {
+            
+            hWindow = ParentWindowObj.hChildren.get(i);
+            ChildWindowObj = this.WM$WindowList.get(H2I(hWindow));
+            
+            bStatus = this.WM$IsPointInRectangle(
+                X,
+                Y,
+                ChildWindowObj.X,
+                ChildWindowObj.Y,
+                ChildWindowObj.Width,
+                ChildWindowObj.Height
+            );
+            if (bStatus) return this.WM$GetWindowByCoords_Internal(hWindow, X - ChildWindowObj.X, Y - ChildWindowObj.Y);
+        }
+        
+        return hParent;
+    }
+    
+    public
+    int
+    WM$GetWindowByCoords(
+        int X,
+        int Y
+        )
+    {
+        WINDOWOBJ WindowObj;
+        int i;
+        boolean bStatus;
+        int hWindow;
+        
+        if (this.WM$ZList.size() == 0) return 0;
+        
+        for (i = this.WM$ZList.size() - 1; i >= 0; i--) {
+            
+            hWindow = this.WM$ZList.get(i);
+            WindowObj = this.WM$WindowList.get(H2I(hWindow));
+            
+            bStatus = this.WM$IsPointInRectangle(
+                X,
+                Y,
+                WindowObj.X,
+                WindowObj.Y,
+                WindowObj.Width,
+                WindowObj.Height
+            );
+            if (bStatus) return this.WM$GetWindowByCoords_Internal(hWindow, X - WindowObj.X, Y - WindowObj.Y);
+        }
+        
+        return 0;
+    }
+    
+    public
+    int
+    WM$XCoordToLocal(
+        int X,
+        int hWindow
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        X -= WindowObj.X;
+        while (WindowObj.hParent != 0) {
+            WindowObj = this.WM$WindowList.get(H2I(WindowObj.hParent));
+            X -= WindowObj.X;
+        }
+        
+        return X;
+    }
+    
+    public
+    int
+    WM$YCoordToLocal(
+        int Y,
+        int hWindow
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        Y -= WindowObj.Y;
+        while (WindowObj.hParent != 0) {
+            WindowObj = this.WM$WindowList.get(H2I(WindowObj.hParent));
+            Y -= WindowObj.Y;
+        }
+        
+        return Y;
+    }
+    
+    public
+    void
+    WM$MoveWindow_D(
+        int hWindow,
+        int dX,
+        int dY
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        WindowObj.X += dX;
+        WindowObj.Y += dY;
+        return;
+    }
+    
+    public
+    void
+    WM$MoveWindow_A(
+        int hWindow,
+        int X,
+        int Y
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        WindowObj.X = X;
+        WindowObj.Y = Y;
+        return;
+    }
+    
+    public
+    void
+    WM$DestroyWindow(
+        int hWindow
+        )
+    {
+        WINDOWOBJ WindowObj;
+        WINDOWOBJ ParentWindowObj;
+        int i;
+        int Size;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        WindowObj.ClassObj.WindowProcedure.WindowProcedure(hWindow, WM_DESTROY, null, null);
+        for (i = 0, Size = WindowObj.hChildren.size(); i < Size; i++) this.WM$DestroyWindow(WindowObj.hChildren.get(0));
+        this.WM$WindowList.set(H2I(hWindow), null);
+        if (WindowObj.hParent == 0) {
+            
+            for (i = 0; i < this.WM$ZList.size(); i++) if (this.WM$ZList.get(i) == hWindow) break;
+            this.WM$ZList.remove(i);
+        }
+        else {
+            
+            ParentWindowObj = this.WM$WindowList.get(H2I(hWindow));
+            for (i = 0; i < ParentWindowObj.hChildren.size(); i++) if (ParentWindowObj.hChildren.get(i) == hWindow) break;
+            ParentWindowObj.hChildren.remove(i);
+        }
+        return;
+    }
+    
+    public
+    Object
+    WM$GetWindowData(
+        int hWindow
+        )
+    {
+        return this.WM$WindowList.get(H2I(hWindow)).WindowData;
+    }
+    
+    public
+    void
+    WM$SetWindowData(
+        int hWindow,
+        Object WindowData
+        )
+    {
+        this.WM$WindowList.get(H2I(hWindow)).WindowData = WindowData;
+        return;
+    }
+    
+    public
+    void
+    WM$CallWindowProcedure(
+        int hWindow,
+        int MessageId,
+        Object wParam,
+        Object lParam
+        )
+    {
+        this.WM$WindowList.get(H2I(hWindow)).ClassObj.WindowProcedure.WindowProcedure(hWindow, MessageId, wParam, lParam);
+        return;
+    }
+    
+    public
+    int
+    WM$GetParentWindow(
+        int hWindow
+        )
+    {
+        return this.WM$WindowList.get(H2I(hWindow)).hParent;
+    }
+    
+    public
+    void
+    WM$ResizeWindow(
+        int hWindow,
+        int Width,
+        int Height
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        WindowObj.Width = Width;
+        WindowObj.Height = Height;
+        return;
+    }
+    
+    public
+    void
+    WM$MinimizeOrMaximizeWindow(
+        int hWindow
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        
+        WindowObj.IsMinimized = !WindowObj.IsMinimized;
+        if (WindowObj.IsMinimized) {
+            WindowObj.OldHeight = WindowObj.Height;
+            WindowObj.Height = 16;
+        }
+        else WindowObj.Height = WindowObj.OldHeight;
+        return;
+    }
+}
+
+final class CToggleButton_Data {
+    public BSE$MODOBJ Module;
+    public boolean IsRed;
+}
+
+final class CToggleButton extends ACWindowProcedure {
+    
+    @Override
+    public
+    void
+    WindowProcedure(
+        int hWindow,
+        int MessageId,
+        Object wParam,
+        Object lParam
+        )
+    {
+        CToggleButton_Data Data;
+        Integer MouseX;
+        Integer MouseY;
+        int Color;
+        
+        switch (MessageId) {
+        case WM_CREATE:
+            Data = new CToggleButton_Data();
+            Data.Module = (BSE$MODOBJ)lParam;
+            Data.IsRed = false;
+            this.Services.WM$SetWindowData(hWindow, Data);
+            break;
+            
+        case WM_PAINT:
+            Data = (CToggleButton_Data)this.Services.WM$GetWindowData(hWindow);
+            if (Data.IsRed) Color = 0x00FF0000;
+            else Color = 0x00FFFFFF;
+            this.Services.WM$DrawString(Data.Module.Id, 4, 2, Color);
+            if (Data.Module.IsActive) this.Services.WM$DrawRectangle(0, 0, 2, 12, 0xFFFFFFFF);
+            break;
+            
+        case WM_MOUSEMOVE:
+            Data = (CToggleButton_Data)this.Services.WM$GetWindowData(hWindow);
+            MouseX = (Integer)wParam;
+            MouseY = (Integer)lParam;
+            Data.IsRed = MouseX > 0 && MouseY > 0;
+            break;
+            
+        case WM_LEFTBUTTONDOWN:
+            MouseX = (Integer)wParam;
+            MouseY = (Integer)lParam;
+            Data = (CToggleButton_Data)this.Services.WM$GetWindowData(hWindow);
+            CClient.BSE$ClientInstance.BSE$ToggleModule(Data.Module);
+            break;
+        }
+        return;
+    }
+}
+
+final class CCategoryWindow extends ACWindowProcedure {
+    
+    @Override
+    public
+    void
+    WindowProcedure(
+        int hWindow,
+        int MessageId,
+        Object wParam,
+        Object lParam
+        )
+    {
+        CCategory Category;
+        int MaxWidth;
+        int I;
+        int Width;
+        
+        switch (MessageId) {
+        case WM_CREATE:
+            this.Services.WM$SetWindowData(hWindow, lParam);
+            
+            Category = (CCategory)lParam;
+            MaxWidth = 100;
+            for (I = 0; I < Category.Modules.length; I++) {
+                Width = this.Services.MinecraftInstance.fontRenderer.getStringWidth(Category.Modules[I].Id) + 4 + 2;
+                if (Width > MaxWidth) MaxWidth = Width;
+            }
+            this.Services.WM$ResizeWindow(
+                hWindow,
+                MaxWidth,
+                16 + Category.Modules.length * 12
+            );
+            
+            for (I = 0; I < Category.Modules.length; I++)
+                this.Services.WM$CreateWindow(
+                    "",
+                    "CToggleButton",
+                    0,
+                    hWindow,
+                    0,
+                    16 + I * 12,
+                    MaxWidth,
+                    12,
+                    Category.Modules[I]
+                );
+            break;
+        }
+        return;
+    }
+}

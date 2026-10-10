@@ -21,6 +21,7 @@ package io.github.C0000374.HCl;
 
 import io.github.C0000374.HCl.Commands.CBind;
 import io.github.C0000374.HCl.Commands.CToggle;
+import io.github.C0000374.HCl.Gui.CCategory;
 import io.github.C0000374.HCl.Modules.Combat.CAutoEat;
 import io.github.C0000374.HCl.Modules.Movement.CWalkOnLiquid;
 import io.github.C0000374.HCl.Modules.Player.CNoFallDamage;
@@ -45,6 +46,7 @@ public final class CClient {
     public static CClient BSE$ClientInstance;
     public HashMap<String, BSE$MODOBJ> BSE$Modules = new HashMap<>();
     public HashMap<String, BSE$CMDOBJ> BSE$Commands = new HashMap<>();
+    public HashMap<String, CCategory> Categories = new HashMap<>();
     
     public
     CClient(
@@ -88,6 +90,51 @@ public final class CClient {
         this.BSE$RegisterModule(new CInstantMine());
         this.BSE$RegisterModule(new CNoFallDamage());
         this.BSE$RegisterModule(new CWalkOnLiquid());
+        
+        //+
+        // НАПОМИНАЛКА: МОДУЛИ В КАТЕГОРИЯХ ДОЛЖНЫ БЫТЬ РАСПОЛОЖЕНЫ В АЛФАВИТНОМ СУКА ПОРЯДКЕ!!!
+        //-
+        
+        this.UI$RegisterCategory(
+            "Combat",
+            0x00FF0000,
+            new BSE$MODOBJ[] {
+                CAutoEat.Instance
+            }
+        );
+        
+        this.UI$RegisterCategory(
+            "Movement",
+            0x0000FF00,
+            new BSE$MODOBJ[] {
+                CWalkOnLiquid.Instance
+            }
+        );
+        
+        this.UI$RegisterCategory(
+            "Player",
+            0x000000FF,
+            new BSE$MODOBJ[] {
+                CNoFallDamage.Instance
+            }
+        );
+        
+        this.UI$RegisterCategory(
+            "Render",
+            0x00FFFF00,
+            new BSE$MODOBJ[] {
+                CFreeCamera.Instance,
+                CFullBright.Instance
+            }
+        );
+        
+        this.UI$RegisterCategory(
+            "World",
+            0x00FF00FF,
+            new BSE$MODOBJ[] {
+                CInstantMine.Instance
+            }
+        );
         
         //+
         // Load the client configuration from the NBT.
@@ -383,6 +430,21 @@ public final class CClient {
             Module = i.next();
             if (Module.KeyBinding == Key) this.BSE$ToggleModule(Module);
         }
+        return;
+    }
+    
+    public
+    void
+    UI$RegisterCategory(
+        IN String Id,
+        IN int Color,
+        IN BSE$MODOBJ[] Modules
+        )
+    {
+        this.Categories.put(
+            Id.toUpperCase(),
+            new CCategory(Id, Color, Modules)
+        );
         return;
     }
 }

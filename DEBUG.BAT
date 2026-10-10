@@ -1,0 +1,1 @@
+Java.exe -Djava.library.path=Lib -cp LibJava\\JInput-2.0.5.jar;LibJava\\JUtils-1.0.0.jar;LibJava\\LWJGL-2.9.0.jar;LibJava\\LWJGL_Util-2.9.0.jar;HCL.JAR -Xmx4G net.minecraft.client.Minecraft TST

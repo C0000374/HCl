@@ -25,6 +25,7 @@ import net.minecraft.src.ItemStack;
 public final class CAutoEat extends BSE$MODOBJ {
 
     public Minecraft MinecraftInstance;
+	public static CAutoEat Instance;
     
     public
     CAutoEat(
@@ -33,6 +34,7 @@ public final class CAutoEat extends BSE$MODOBJ {
     {
         super("AutoEat", ME$_BIT(ME$PLAYER_UPDATE_PRE));
         this.MinecraftInstance = MinecraftInstance;
+		Instance = this;
         return;
     }
     
