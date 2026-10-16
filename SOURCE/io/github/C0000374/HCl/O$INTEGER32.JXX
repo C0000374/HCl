@@ -1,0 +1,16 @@
+package io.github.C0000374.HCl;
+
+#include <HCL.INC>
+
+public final class O$INTEGER32 {
+    public int Value;
+    
+    public
+    O$INTEGER32(
+        int Value
+        )
+    {
+        this.Value = Value;
+        return;
+    }
+}

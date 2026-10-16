@@ -1,0 +1,16 @@
+package io.github.C0000374.HCl;
+
+#include <HCL.INC>
+
+public final class O$INTEGER16 {
+    public short Value;
+    
+    public
+    O$INTEGER16(
+        short Value
+        )
+    {
+        this.Value = Value;
+        return;
+    }
+}

@@ -1,0 +1,16 @@
+package io.github.C0000374.HCl;
+
+#include <HCL.INC>
+
+public final class O$INTEGER64 {
+    public long Value;
+    
+    public
+    O$INTEGER64(
+        long Value
+        )
+    {
+        this.Value = Value;
+        return;
+    }
+}

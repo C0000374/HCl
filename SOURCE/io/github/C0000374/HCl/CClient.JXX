@@ -47,6 +47,7 @@ public final class CClient {
     public HashMap<String, BSE$MODOBJ> BSE$Modules = new HashMap<>();
     public HashMap<String, BSE$CMDOBJ> BSE$Commands = new HashMap<>();
     public HashMap<String, CCategory> Categories = new HashMap<>();
+    public NBTTagCompound UI$NbtTag = new NBTTagCompound();
     
     public
     CClient(
@@ -165,6 +166,9 @@ public final class CClient {
                         this.BSE$ReadModuleFromNbt(Module, ModulesCompoundTag.getCompoundTag(Module.Id));
                 }
             }
+            
+            if (ClientConfigurationCompoundTag.hasKey("ClickGui") && (ClientConfigurationCompoundTag.GetTag("ClickGui") instanceof NBTTagCompound))
+                this.UI$NbtTag = ClientConfigurationCompoundTag.getCompoundTag("ClickGui");
         }
         return;
     }
@@ -191,6 +195,7 @@ public final class CClient {
         NBTTagCompound ModuleCompoundTag;
         Iterator<BSE$MODOBJ> i;
         BSE$MODOBJ Module;
+        NBTTagCompound ClickGuiTag;
         
         ClientConfigurationCompoundTag = new NBTTagCompound();
         
@@ -210,6 +215,14 @@ public final class CClient {
         }
         
         ClientConfigurationCompoundTag.setCompoundTag("Modules", ModulesCompoundTag);
+        
+        //+
+        // Write cli(ff)ck GUI config
+        //-
+        
+        ClickGuiTag = new NBTTagCompound();
+        BSE$MinecraftInstance.ClickGui.UI$SaveConfiguration(ClickGuiTag);
+        ClientConfigurationCompoundTag.setCompoundTag("ClickGui", ClickGuiTag);
         
         //+
         // Write the NBT data to the NBT$CH_C.GZ file.

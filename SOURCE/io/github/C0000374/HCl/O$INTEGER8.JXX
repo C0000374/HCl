@@ -1,0 +1,16 @@
+package io.github.C0000374.HCl;
+
+#include <HCL.INC>
+
+public final class O$INTEGER8 {
+    public byte Value;
+    
+    public
+    O$INTEGER8(
+        byte Value
+        )
+    {
+        this.Value = Value;
+        return;
+    }
+}

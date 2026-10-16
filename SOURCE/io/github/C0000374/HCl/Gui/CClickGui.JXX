@@ -2,11 +2,16 @@ package io.github.C0000374.HCl.Gui;
 
 import io.github.C0000374.HCl.CClient;
 import io.github.C0000374.HCl.BSE$MODOBJ;
+import io.github.C0000374.HCl.O$INTEGER32;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiScreen;
+import net.minecraft.src.CompressedStreamTools;
+import net.minecraft.src.NBTTagByte;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NBTTagInt;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -95,6 +100,7 @@ public final class CClickGui extends GuiScreen {
     public int WM$WindowToDrag;
     public static CClickGui Instance;
     public int WM$LastWindow = 0;
+    public ArrayList<Integer> UI$CategoriesList = new ArrayList<>();
     
     public
     CClickGui(
@@ -105,15 +111,20 @@ public final class CClickGui extends GuiScreen {
         CCategory Category;
         int Y;
         int hWindow;
+        NBTTagCompound ClickGuiTag;
+        NBTTagCompound WindowTag;
         
         this.MinecraftInstance = MinecraftInstance;
         Instance = this;
         this.WM$RegisterClass("CToggleButton", new CToggleButton(), 0);
         this.WM$RegisterClass("CCategoryWindow", new CCategoryWindow(), 0);
         
+        ClickGuiTag = this.MinecraftInstance.Client.UI$NbtTag;
+        this.MinecraftInstance.Client.UI$NbtTag = null; // delete link
+        
         I = this.MinecraftInstance.Client.Categories.values().iterator();
         Y = 0;
-        while (I.hasNext()) {
+        for (; I.hasNext(); Y += 20) {
             Category = I.next();
             
             hWindow = this.WM$CreateWindow(
@@ -127,10 +138,57 @@ public final class CClickGui extends GuiScreen {
                 16,
                 Category
             );
-            this.WM$MinimizeOrMaximizeWindow(hWindow);
-            Y += 20;
+            this.UI$CategoriesList.add(hWindow);
+            
+            if (ClickGuiTag.hasKey(Category.Id) && (ClickGuiTag.GetTag(Category.Id) instanceof NBTTagCompound)) {
+                WindowTag = ClickGuiTag.getCompoundTag(Category.Id);
+                
+                if (
+                    (WindowTag.hasKey("X") && (WindowTag.GetTag("X") instanceof NBTTagInt)) &&
+                    (WindowTag.hasKey("Y") && (WindowTag.GetTag("Y") instanceof NBTTagInt))
+                    ) this.WM$MoveWindow_A(hWindow, WindowTag.getInteger("X"), WindowTag.getInteger("Y"));
+                
+                if (
+                    (WindowTag.hasKey("IsMinimized") && (WindowTag.GetTag("IsMinimized") instanceof NBTTagByte)) &&
+                    WindowTag.getBoolean("IsMinimized")
+                    ) this.WM$MinimizeWindow(hWindow);
+            }
+            else this.WM$MinimizeWindow(hWindow);
         }
         return;
+    }
+    
+    public
+    void
+    UI$SaveConfiguration(
+        NBTTagCompound ClickGuiTag
+        )
+    //++
+    //
+    // save clickgui cfg
+    //
+    //--
+    {
+        int i;
+        int hWindow;
+        NBTTagCompound WindowTag;
+        O$INTEGER32 X;
+        O$INTEGER32 Y;
+        
+        for (i = 0; i < this.UI$CategoriesList.size(); i++) {
+            hWindow = this.UI$CategoriesList.get(i);
+            WindowTag = new NBTTagCompound();
+            
+            X = new O$INTEGER32(0);
+            Y = new O$INTEGER32(0);
+            this.WM$GetWindowPosition(hWindow, X, Y);
+            WindowTag.setInteger("X", X.Value);
+            WindowTag.setInteger("Y", Y.Value);
+            
+            WindowTag.setBoolean("IsMinimized", this.WM$IsWindowMinimized(hWindow));
+            
+            ClickGuiTag.setCompoundTag(this.WM$GetWindowTitle(hWindow), WindowTag);
+        }
     }
     
     @Override
@@ -931,7 +989,7 @@ public final class CClickGui extends GuiScreen {
     
     public
     void
-    WM$MinimizeOrMaximizeWindow(
+    WM$MinimizeWindow(
         int hWindow
         )
     {
@@ -939,13 +997,63 @@ public final class CClickGui extends GuiScreen {
         
         WindowObj = this.WM$WindowList.get(H2I(hWindow));
         
-        WindowObj.IsMinimized = !WindowObj.IsMinimized;
-        if (WindowObj.IsMinimized) {
+        if (!WindowObj.IsMinimized) {
+            WindowObj.IsMinimized = true;
             WindowObj.OldHeight = WindowObj.Height;
             WindowObj.Height = 16;
         }
-        else WindowObj.Height = WindowObj.OldHeight;
         return;
+    }
+    
+    public
+    void
+    WM$MaximizeWindow(
+        int hWindow
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        
+        if (WindowObj.IsMinimized) {
+            WindowObj.IsMinimized = false;
+            WindowObj.Height = WindowObj.OldHeight;
+        }
+        return;
+    }
+    
+    public
+    void
+    WM$GetWindowPosition(
+        int hWindow,
+        O$INTEGER32 X,
+        O$INTEGER32 Y
+        )
+    {
+        WINDOWOBJ WindowObj;
+        
+        WindowObj = this.WM$WindowList.get(H2I(hWindow));
+        X.Value = WindowObj.X;
+        Y.Value = WindowObj.Y;
+        return;
+    }
+    
+    public
+    boolean
+    WM$IsWindowMinimized(
+        int hWindow
+        )
+    {
+        return this.WM$WindowList.get(H2I(hWindow)).IsMinimized;
+    }
+    
+    public
+    String
+    WM$GetWindowTitle(
+        int hWindow
+        )
+    {
+        return this.WM$WindowList.get(H2I(hWindow)).Title;
     }
 }
 
