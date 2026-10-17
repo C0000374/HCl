@@ -1,0 +1,19 @@
+package io.github.C0000374.HCl.Modules.Player;
+
+#include <HCL.INC>
+
+import io.github.C0000374.HCl.BSE$MODOBJ;
+
+public final class CRetard extends BSE$MODOBJ {
+    
+    public static CRetard Instance;
+    
+    public
+    CRetard(
+        )
+    {
+        super("Retard", 0);
+        Instance = this;
+        return;
+    }
+}

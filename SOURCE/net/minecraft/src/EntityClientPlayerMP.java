@@ -1,7 +1,9 @@
 package net.minecraft.src;
 
 import io.github.C0000374.HCl.Modules.Player.CNoFallDamage;
+import io.github.C0000374.HCl.Modules.Player.CRetard;
 import io.github.C0000374.HCl.Modules.Render.FreeCamera.CFreeCamera;
+import java.util.Random;
 import net.minecraft.client.Minecraft;
 
 public class EntityClientPlayerMP extends EntityPlayerSP {
@@ -88,6 +90,9 @@ public class EntityClientPlayerMP extends EntityPlayerSP {
         } else if (var14) {
             this.sendQueue.addToSendQueue(new Packet11PlayerPosition(this.posX, this.boundingBox.minY, this.posY, this.posZ, this.onGround));
             this.timeSinceMoved = 0;
+        } else if (CRetard.Instance.IsActive) {
+            this.sendQueue.addToSendQueue(new Packet12PlayerLook((float)(new Random()).nextInt(360), (float)(new Random()).nextInt(180), this.onGround));
+            this.sendQueue.addToSendQueue(new Packet18Animation(this, 1));
         } else if (var15) {
             this.sendQueue.addToSendQueue(new Packet12PlayerLook(this.rotationYaw, this.rotationPitch, this.onGround));
             this.timeSinceMoved = 0;

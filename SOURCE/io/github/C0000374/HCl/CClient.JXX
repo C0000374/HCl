@@ -25,6 +25,7 @@ import io.github.C0000374.HCl.Gui.CCategory;
 import io.github.C0000374.HCl.Modules.Combat.CAutoEat;
 import io.github.C0000374.HCl.Modules.Movement.CWalkOnLiquid;
 import io.github.C0000374.HCl.Modules.Player.CNoFallDamage;
+import io.github.C0000374.HCl.Modules.Player.CRetard;
 import io.github.C0000374.HCl.Modules.Render.CFullBright;
 import io.github.C0000374.HCl.Modules.Render.FreeCamera.CFreeCamera;
 import io.github.C0000374.HCl.Modules.UI.CShowCoordinates;
@@ -96,6 +97,7 @@ public final class CClient {
         this.BSE$RegisterModule(new CFullBright(MinecraftInstance));
         this.BSE$RegisterModule(new CInstantMine());
         this.BSE$RegisterModule(new CNoFallDamage());
+        this.BSE$RegisterModule(new CRetard());
         this.BSE$RegisterModule(new CShowCoordinates());
         this.BSE$RegisterModule(new CWalkOnLiquid());
         
@@ -123,7 +125,8 @@ public final class CClient {
             "Player",
             0x000000FF,
             new BSE$MODOBJ[] {
-                CNoFallDamage.Instance
+                CNoFallDamage.Instance,
+                CRetard.Instance
             }
         );
         
