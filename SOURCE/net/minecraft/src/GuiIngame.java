@@ -1,7 +1,9 @@
 package net.minecraft.src;
 
+import io.github.C0000374.HCl.BSE$MODOBJ;
 import io.github.C0000374.HCl.CClient;
 import io.github.C0000374.HCl.Gui.CConsole;
+import io.github.C0000374.HCl.Modules.UI.CShowCoordinates;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,17 @@ public class GuiIngame extends Gui {
     public void renderGameOverlay(float var1, boolean var2, int var3, int var4) {
         
         int CountOfSlots;
+        String CoordinatesOverworld;
+        String CoordinatesHell;
+        int RealY;
+        float OldYaw;
+        float OldYawOffset;
+        int X;
+        int Y;
+        int Limit;
+        int i;
+        int j;
+        ArrayList<BSE$MODOBJ> ActiveModules;
         
         ScaledResolution var5 = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         int var6 = var5.getScaledWidth();
@@ -197,8 +210,96 @@ public class GuiIngame extends Gui {
             GL11.glPopMatrix();
         }
         else {
-            
             var8.drawStringWithShadow("HCl " + CClient.Version, 2, 2, 0xFFFFFF);
+            
+            if (CShowCoordinates.Instance.IsActive) {
+                
+                RealY = (int)(this.mc.thePlayer.posY - this.mc.thePlayer.yOffset);
+                
+                if (this.mc.thePlayer.dimension == 0) {
+                    CoordinatesOverworld = "OVERWORLD x:" + (int)this.mc.thePlayer.posX + " y:" + RealY + " z:" + (int)this.mc.thePlayer.posZ;
+                    CoordinatesHell = "HELL x:" + (int)(this.mc.thePlayer.posX / 8.0) + " y:" + RealY + " z:" + (int)(this.mc.thePlayer.posZ / 8.0);
+                }
+                else {
+                    CoordinatesOverworld = "OVERWORLD x:" + (int)(this.mc.thePlayer.posX * 8.0) + " y:" + RealY + " z:" + (int)(this.mc.thePlayer.posZ * 8.0);
+                    CoordinatesHell = "HELL x:" + (int)this.mc.thePlayer.posX + " y:" + RealY + " z:" + (int)this.mc.thePlayer.posZ;
+                }
+                var8.drawStringWithShadow(CoordinatesOverworld, 2, var7 - 32, 0x0000FF00);
+                var8.drawStringWithShadow(CoordinatesHell, 2, var7 - 22, 0x00FF0000);
+            }
+            
+            ActiveModules = this.mc.Client.UI$GetActiveModules();
+            for (i = 0; i < ActiveModules.size(); i++) {
+                var8.drawStringWithShadow(
+                    ActiveModules.get(i).Id,
+                    var6 - var8.getStringWidth(ActiveModules.get(i).Id) - 2,
+                    2 + i * 10,
+                    ActiveModules.get(i).Category.Color
+                );
+            }
+            
+            this.drawGradientRect(var6 - 18 * 9 - 8,  var7 - 18 * 4 - 8,  var6 - 4,           var7 - 4,           -1072689136, -804253680);
+            this.drawGradientRect(var6 - 18 * 4 - 12, var7 - 18 * 8 - 14, var6 - 18 * 3 - 10, var7 - 18 * 4 - 10, -1072689136, -804253680);
+            this.drawGradientRect(var6 - 18 * 3 - 8,  var7 - 18 * 8 - 14, var6 - 4,           var7 - 18 * 4 - 10, -1072689136, -804253680);
+            this.drawRect        (var6 - 18 * 9 - 8,  var7 - 18 * 4 - 24, var6 - 18 * 4 - 14, var7 - 18 * 4 - 10, 0xFFFF0000             );
+            var8.drawStringWithShadow("Inventory", var6 - 18 * 9 - 6, var7 - 18 * 4 - 21, 0x00FFFFFF);
+                
+            if (RenderManager.instance.livingPlayer != null) {
+                GL11.glEnable(32826);
+                GL11.glEnable(2903);
+                GL11.glPushMatrix();
+                GL11.glTranslatef((float)(var6 - (18 * 3 + 4) / 2 - 4), (float)(var7 - (18 * 4 + 4) - 10), 50.0F);
+                GL11.glScalef(-30.0F, 30.0F, 30.0F);
+                GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+                GL11.glRotatef(135.0F, 0.0F, 1.0F, 0.0F);
+                RenderHelper.enableStandardItemLighting();
+                GL11.glRotatef(-135.0F, 0.0F, 1.0F, 0.0F);
+                this.mc.thePlayer.entityBrightness = 1.0F;
+                OldYawOffset = this.mc.thePlayer.renderYawOffset;
+                OldYaw = this.mc.thePlayer.rotationYaw;
+                this.mc.thePlayer.rotationYaw = 0.0F;
+                this.mc.thePlayer.renderYawOffset = OldYawOffset - OldYaw;
+                GL11.glTranslatef(0.0F, this.mc.thePlayer.yOffset, 0.0F);
+                RenderManager.instance.playerViewY = 180.0F;
+                RenderManager.instance.renderEntityWithPosYaw(this.mc.thePlayer, 0.0, 0.0, 0.0, 0.0F, 1.0F);
+                this.mc.thePlayer.entityBrightness = 0.0F;
+                this.mc.thePlayer.renderYawOffset = OldYawOffset;
+                this.mc.thePlayer.rotationYaw = OldYaw;
+                GL11.glPopMatrix();
+                RenderHelper.disableStandardItemLighting();
+                GL11.glDisable(32826);
+            }
+                
+            GL11.glEnable(32826);
+            GL11.glPushMatrix();
+            GL11.glRotatef(120.0F, 1.0F, 0.0F, 0.0F);
+            RenderHelper.enableStandardItemLighting();
+            GL11.glPopMatrix();
+                
+            Y = var7 - 18 * 8 - 12;
+            X = var6 - 18 * 4 - 10;
+            for (i = 3; i >= 0; i--) {
+                itemRenderer.renderItemIntoGUI(var8, this.mc.renderEngine, var11.armorInventory[i], X, Y);
+                itemRenderer.renderItemOverlayIntoGUI(var8, this.mc.renderEngine, var11.armorInventory[i], X, Y);
+                Y += 18;
+            }
+                
+            i = 0;
+            Y = var7 - 18 * 4 - 6;
+            for (j = 0; j < 4; j++) {
+                    
+                X = var6 - 18 * 9 - 6;
+                Limit = i + 9;
+                for (; i < Limit; i++) {
+                    itemRenderer.renderItemIntoGUI(var8, this.mc.renderEngine, var11.mainInventory[i], X, Y);
+                    itemRenderer.renderItemOverlayIntoGUI(var8, this.mc.renderEngine, var11.mainInventory[i], X, Y);
+                    X += 18;
+                }
+                Y += 18;
+            }
+                
+            RenderHelper.disableStandardItemLighting();
+            GL11.glDisable(32826);
         }
 
         if (this.recordPlayingUpFor > 0) {

@@ -1,0 +1,20 @@
+package io.github.C0000374.HCl.Modules.UI;
+
+#include <HCL.INC>
+
+import io.github.C0000374.HCl.BSE$MODOBJ;
+
+public final class CShowCoordinates extends BSE$MODOBJ {
+
+	public static CShowCoordinates Instance;
+	
+	public
+	CShowCoordinates(
+	    )
+	{
+		super("ShowCoordinates", 0);
+		this.IsActive = true;
+		Instance = this;
+		return;
+	}
+}

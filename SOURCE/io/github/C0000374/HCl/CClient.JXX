@@ -27,14 +27,19 @@ import io.github.C0000374.HCl.Modules.Movement.CWalkOnLiquid;
 import io.github.C0000374.HCl.Modules.Player.CNoFallDamage;
 import io.github.C0000374.HCl.Modules.Render.CFullBright;
 import io.github.C0000374.HCl.Modules.Render.FreeCamera.CFreeCamera;
+import io.github.C0000374.HCl.Modules.UI.CShowCoordinates;
 import io.github.C0000374.HCl.Modules.World.CInstantMine;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.CompressedStreamTools;
+import net.minecraft.src.FontRenderer;
 import net.minecraft.src.NBTTagByte;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagInt;
@@ -90,6 +95,7 @@ public final class CClient {
         this.BSE$RegisterModule(new CFullBright(MinecraftInstance));
         this.BSE$RegisterModule(new CInstantMine());
         this.BSE$RegisterModule(new CNoFallDamage());
+        this.BSE$RegisterModule(new CShowCoordinates());
         this.BSE$RegisterModule(new CWalkOnLiquid());
         
         //+
@@ -126,6 +132,14 @@ public final class CClient {
             new BSE$MODOBJ[] {
                 CFreeCamera.Instance,
                 CFullBright.Instance
+            }
+        );
+        
+        this.UI$RegisterCategory(
+            "UI",
+            0x0000FFFF,
+            new BSE$MODOBJ[] {
+                CShowCoordinates.Instance
             }
         );
         
@@ -459,5 +473,52 @@ public final class CClient {
             new CCategory(Id, Color, Modules)
         );
         return;
+    }
+    
+    public
+    ArrayList<BSE$MODOBJ>
+    UI$GetActiveModules(
+        )
+    {
+        ArrayList<BSE$MODOBJ> ActiveModules;
+        Iterator<BSE$MODOBJ> i;
+        BSE$MODOBJ Module;
+        
+        ActiveModules = new ArrayList<>();
+        i = this.BSE$Modules.values().iterator();
+        while (i.hasNext()) {
+            Module = i.next();
+            if (Module.IsActive) ActiveModules.add(Module);
+        }
+        
+        Collections.sort(ActiveModules, new UI$CompareModules(BSE$MinecraftInstance.fontRenderer));
+        return ActiveModules;
+    }
+}
+
+final class UI$CompareModules implements Comparator<BSE$MODOBJ> {
+    
+    public FontRenderer FRenderer;
+    
+    public
+    UI$CompareModules(
+        FontRenderer FRenderer
+        )
+    {
+        this.FRenderer = FRenderer;
+        return;
+    }
+    
+    @Override
+    public
+    int
+    compare(
+        BSE$MODOBJ A,
+        BSE$MODOBJ B
+        )
+    {
+        if (this.FRenderer.getStringWidth(A.Id) > this.FRenderer.getStringWidth(B.Id)) return -1;
+        if (this.FRenderer.getStringWidth(A.Id) < this.FRenderer.getStringWidth(B.Id)) return 1;
+        return 0;
     }
 }
