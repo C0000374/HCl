@@ -245,6 +245,7 @@ public class GuiIngame extends Gui {
             var8.drawStringWithShadow("Inventory", var6 - 18 * 9 - 6, var7 - 18 * 4 - 21, 0x00FFFFFF);
                 
             if (RenderManager.instance.livingPlayer != null) {
+                this.mc.Client.DontRenderUsernames = true;
                 GL11.glEnable(32826);
                 GL11.glEnable(2903);
                 GL11.glPushMatrix();
@@ -268,6 +269,7 @@ public class GuiIngame extends Gui {
                 GL11.glPopMatrix();
                 RenderHelper.disableStandardItemLighting();
                 GL11.glDisable(32826);
+                this.mc.Client.DontRenderUsernames = false;
             }
                 
             GL11.glEnable(32826);

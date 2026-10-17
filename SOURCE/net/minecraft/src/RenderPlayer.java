@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import io.github.C0000374.HCl.CClient;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
@@ -56,7 +57,7 @@ public class RenderPlayer extends RenderLiving {
     }
 
     protected void renderName(EntityPlayer var1, double var2, double var4, double var6) {
-        if (Minecraft.isGuiEnabled() && var1 != this.renderManager.livingPlayer) {
+        if (Minecraft.isGuiEnabled() && var1 != this.renderManager.livingPlayer && !CClient.BSE$ClientInstance.DontRenderUsernames) {
             float var8 = 1.6F;
             float var9 = 0.016666668F * var8;
             float var10 = var1.getDistanceToEntity(this.renderManager.livingPlayer);
