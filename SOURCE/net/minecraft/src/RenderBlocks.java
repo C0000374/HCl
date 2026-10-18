@@ -345,36 +345,36 @@ public class RenderBlocks {
         double var27 = (double)((float)var22 / 256.0F);
         double var29 = (double)(((float)var22 + 15.99F) / 256.0F);
         float var31 = 0.125F;
-        float var32 = (float)(var2 + 1);
-        float var33 = (float)(var2 + 1);
-        float var34 = (float)(var2 + 0);
-        float var35 = (float)(var2 + 0);
-        float var36 = (float)(var4 + 0);
-        float var37 = (float)(var4 + 1);
-        float var38 = (float)(var4 + 1);
-        float var39 = (float)(var4 + 0);
-        float var40 = (float)var3 + var31;
+        double var32 = (double)(var2 + 1);
+        double var33 = (double)(var2 + 1);
+        double var34 = (double)(var2 + 0);
+        double var35 = (double)(var2 + 0);
+        double var36 = (double)(var4 + 0);
+        double var37 = (double)(var4 + 1);
+        double var38 = (double)(var4 + 1);
+        double var39 = (double)(var4 + 0);
+        double var40 = (double)var3 + var31;
         if (var6 == 2) {
-            var32 = var33 = (float)(var2 + 0);
-            var34 = var35 = (float)(var2 + 1);
-            var36 = var39 = (float)(var4 + 1);
-            var37 = var38 = (float)(var4 + 0);
+            var32 = var33 = (double)(var2 + 0);
+            var34 = var35 = (double)(var2 + 1);
+            var36 = var39 = (double)(var4 + 1);
+            var37 = var38 = (double)(var4 + 0);
         } else if (var6 == 3) {
-            var32 = var35 = (float)(var2 + 0);
-            var33 = var34 = (float)(var2 + 1);
-            var36 = var37 = (float)(var4 + 0);
-            var38 = var39 = (float)(var4 + 1);
+            var32 = var35 = (double)(var2 + 0);
+            var33 = var34 = (double)(var2 + 1);
+            var36 = var37 = (double)(var4 + 0);
+            var38 = var39 = (double)(var4 + 1);
         } else if (var6 == 1) {
-            var32 = var35 = (float)(var2 + 1);
-            var33 = var34 = (float)(var2 + 0);
-            var36 = var37 = (float)(var4 + 1);
-            var38 = var39 = (float)(var4 + 0);
+            var32 = var35 = (double)(var2 + 1);
+            var33 = var34 = (double)(var2 + 0);
+            var36 = var37 = (double)(var4 + 1);
+            var38 = var39 = (double)(var4 + 0);
         }
 
-        var8.addVertexWithUV((double)var35, (double)var40, (double)var39, var23, var27);
-        var8.addVertexWithUV((double)var34, (double)var40, (double)var38, var23, var29);
-        var8.addVertexWithUV((double)var33, (double)var40, (double)var37, var25, var29);
-        var8.addVertexWithUV((double)var32, (double)var40, (double)var36, var25, var27);
+        var8.addVertexWithUV(var35, var40, var39, var23, var27);
+        var8.addVertexWithUV(var34, var40, var38, var23, var29);
+        var8.addVertexWithUV(var33, var40, var37, var25, var29);
+        var8.addVertexWithUV(var32, var40, var36, var25, var27);
         return true;
     }
 
@@ -560,28 +560,28 @@ public class RenderBlocks {
             this.field_31084_j = 3;
             var1.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F);
             this.renderStandardBlock(var1, var2, var3, var4);
-            this.func_31076_a((double)((float)var2 + 0.375F), (double)((float)var2 + 0.625F), (double)((float)var3 + 0.25F), (double)((float)var3 + 0.25F + var12), (double)((float)var4 + 0.625F), (double)((float)var4 + 0.625F), var11 * 0.8F, var13);
-            this.func_31076_a((double)((float)var2 + 0.625F), (double)((float)var2 + 0.375F), (double)((float)var3 + 0.25F), (double)((float)var3 + 0.25F + var12), (double)((float)var4 + 0.375F), (double)((float)var4 + 0.375F), var11 * 0.8F, var13);
-            this.func_31076_a((double)((float)var2 + 0.375F), (double)((float)var2 + 0.375F), (double)((float)var3 + 0.25F), (double)((float)var3 + 0.25F + var12), (double)((float)var4 + 0.375F), (double)((float)var4 + 0.625F), var11 * 0.6F, var13);
-            this.func_31076_a((double)((float)var2 + 0.625F), (double)((float)var2 + 0.625F), (double)((float)var3 + 0.25F), (double)((float)var3 + 0.25F + var12), (double)((float)var4 + 0.625F), (double)((float)var4 + 0.375F), var11 * 0.6F, var13);
+            this.func_31076_a((double)((double)var2 + 0.375F), (double)((double)var2 + 0.625F), (double)((double)var3 + 0.25F), (double)((double)var3 + 0.25F + var12), (double)((double)var4 + 0.625F), (double)((double)var4 + 0.625F), var11 * 0.8F, var13);
+            this.func_31076_a((double)((double)var2 + 0.625F), (double)((double)var2 + 0.375F), (double)((double)var3 + 0.25F), (double)((double)var3 + 0.25F + var12), (double)((double)var4 + 0.375F), (double)((double)var4 + 0.375F), var11 * 0.8F, var13);
+            this.func_31076_a((double)((double)var2 + 0.375F), (double)((double)var2 + 0.375F), (double)((double)var3 + 0.25F), (double)((double)var3 + 0.25F + var12), (double)((double)var4 + 0.375F), (double)((double)var4 + 0.625F), var11 * 0.6F, var13);
+            this.func_31076_a((double)((double)var2 + 0.625F), (double)((double)var2 + 0.625F), (double)((double)var3 + 0.25F), (double)((double)var3 + 0.25F + var12), (double)((double)var4 + 0.625F), (double)((double)var4 + 0.375F), var11 * 0.6F, var13);
             break;
         case 1:
             var1.setBlockBounds(0.0F, 0.75F, 0.0F, 1.0F, 1.0F, 1.0F);
             this.renderStandardBlock(var1, var2, var3, var4);
-            this.func_31076_a((double)((float)var2 + 0.375F), (double)((float)var2 + 0.625F), (double)((float)var3 - 0.25F + 1.0F - var12), (double)((float)var3 - 0.25F + 1.0F), (double)((float)var4 + 0.625F), (double)((float)var4 + 0.625F), var11 * 0.8F, var13);
-            this.func_31076_a((double)((float)var2 + 0.625F), (double)((float)var2 + 0.375F), (double)((float)var3 - 0.25F + 1.0F - var12), (double)((float)var3 - 0.25F + 1.0F), (double)((float)var4 + 0.375F), (double)((float)var4 + 0.375F), var11 * 0.8F, var13);
-            this.func_31076_a((double)((float)var2 + 0.375F), (double)((float)var2 + 0.375F), (double)((float)var3 - 0.25F + 1.0F - var12), (double)((float)var3 - 0.25F + 1.0F), (double)((float)var4 + 0.375F), (double)((float)var4 + 0.625F), var11 * 0.6F, var13);
-            this.func_31076_a((double)((float)var2 + 0.625F), (double)((float)var2 + 0.625F), (double)((float)var3 - 0.25F + 1.0F - var12), (double)((float)var3 - 0.25F + 1.0F), (double)((float)var4 + 0.625F), (double)((float)var4 + 0.375F), var11 * 0.6F, var13);
+            this.func_31076_a((double)((double)var2 + 0.375F), (double)((double)var2 + 0.625F), (double)((double)var3 - 0.25F + 1.0F - var12), (double)((double)var3 - 0.25F + 1.0F), (double)((double)var4 + 0.625F), (double)((double)var4 + 0.625F), var11 * 0.8F, var13);
+            this.func_31076_a((double)((double)var2 + 0.625F), (double)((double)var2 + 0.375F), (double)((double)var3 - 0.25F + 1.0F - var12), (double)((double)var3 - 0.25F + 1.0F), (double)((double)var4 + 0.375F), (double)((double)var4 + 0.375F), var11 * 0.8F, var13);
+            this.func_31076_a((double)((double)var2 + 0.375F), (double)((double)var2 + 0.375F), (double)((double)var3 - 0.25F + 1.0F - var12), (double)((double)var3 - 0.25F + 1.0F), (double)((double)var4 + 0.375F), (double)((double)var4 + 0.625F), var11 * 0.6F, var13);
+            this.func_31076_a((double)((double)var2 + 0.625F), (double)((double)var2 + 0.625F), (double)((double)var3 - 0.25F + 1.0F - var12), (double)((double)var3 - 0.25F + 1.0F), (double)((double)var4 + 0.625F), (double)((double)var4 + 0.375F), var11 * 0.6F, var13);
             break;
         case 2:
             this.field_31085_i = 1;
             this.field_31084_j = 2;
             var1.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.25F);
             this.renderStandardBlock(var1, var2, var3, var4);
-            this.func_31081_b((double)((float)var2 + 0.375F), (double)((float)var2 + 0.375F), (double)((float)var3 + 0.625F), (double)((float)var3 + 0.375F), (double)((float)var4 + 0.25F), (double)((float)var4 + 0.25F + var12), var11 * 0.6F, var13);
-            this.func_31081_b((double)((float)var2 + 0.625F), (double)((float)var2 + 0.625F), (double)((float)var3 + 0.375F), (double)((float)var3 + 0.625F), (double)((float)var4 + 0.25F), (double)((float)var4 + 0.25F + var12), var11 * 0.6F, var13);
-            this.func_31081_b((double)((float)var2 + 0.375F), (double)((float)var2 + 0.625F), (double)((float)var3 + 0.375F), (double)((float)var3 + 0.375F), (double)((float)var4 + 0.25F), (double)((float)var4 + 0.25F + var12), var11 * 0.5F, var13);
-            this.func_31081_b((double)((float)var2 + 0.625F), (double)((float)var2 + 0.375F), (double)((float)var3 + 0.625F), (double)((float)var3 + 0.625F), (double)((float)var4 + 0.25F), (double)((float)var4 + 0.25F + var12), var11, var13);
+            this.func_31081_b((double)((double)var2 + 0.375F), (double)((double)var2 + 0.375F), (double)((double)var3 + 0.625F), (double)((double)var3 + 0.375F), (double)((double)var4 + 0.25F), (double)((double)var4 + 0.25F + var12), var11 * 0.6F, var13);
+            this.func_31081_b((double)((double)var2 + 0.625F), (double)((double)var2 + 0.625F), (double)((double)var3 + 0.375F), (double)((double)var3 + 0.625F), (double)((double)var4 + 0.25F), (double)((double)var4 + 0.25F + var12), var11 * 0.6F, var13);
+            this.func_31081_b((double)((double)var2 + 0.375F), (double)((double)var2 + 0.625F), (double)((double)var3 + 0.375F), (double)((double)var3 + 0.375F), (double)((double)var4 + 0.25F), (double)((double)var4 + 0.25F + var12), var11 * 0.5F, var13);
+            this.func_31081_b((double)((double)var2 + 0.625F), (double)((double)var2 + 0.375F), (double)((double)var3 + 0.625F), (double)((double)var3 + 0.625F), (double)((double)var4 + 0.25F), (double)((double)var4 + 0.25F + var12), var11, var13);
             break;
         case 3:
             this.field_31085_i = 2;
@@ -590,10 +590,10 @@ public class RenderBlocks {
             this.field_31082_l = 3;
             var1.setBlockBounds(0.0F, 0.0F, 0.75F, 1.0F, 1.0F, 1.0F);
             this.renderStandardBlock(var1, var2, var3, var4);
-            this.func_31081_b((double)((float)var2 + 0.375F), (double)((float)var2 + 0.375F), (double)((float)var3 + 0.625F), (double)((float)var3 + 0.375F), (double)((float)var4 - 0.25F + 1.0F - var12), (double)((float)var4 - 0.25F + 1.0F), var11 * 0.6F, var13);
-            this.func_31081_b((double)((float)var2 + 0.625F), (double)((float)var2 + 0.625F), (double)((float)var3 + 0.375F), (double)((float)var3 + 0.625F), (double)((float)var4 - 0.25F + 1.0F - var12), (double)((float)var4 - 0.25F + 1.0F), var11 * 0.6F, var13);
-            this.func_31081_b((double)((float)var2 + 0.375F), (double)((float)var2 + 0.625F), (double)((float)var3 + 0.375F), (double)((float)var3 + 0.375F), (double)((float)var4 - 0.25F + 1.0F - var12), (double)((float)var4 - 0.25F + 1.0F), var11 * 0.5F, var13);
-            this.func_31081_b((double)((float)var2 + 0.625F), (double)((float)var2 + 0.375F), (double)((float)var3 + 0.625F), (double)((float)var3 + 0.625F), (double)((float)var4 - 0.25F + 1.0F - var12), (double)((float)var4 - 0.25F + 1.0F), var11, var13);
+            this.func_31081_b((double)((double)var2 + 0.375F), (double)((double)var2 + 0.375F), (double)((double)var3 + 0.625F), (double)((double)var3 + 0.375F), (double)((double)var4 - 0.25F + 1.0F - var12), (double)((double)var4 - 0.25F + 1.0F), var11 * 0.6F, var13);
+            this.func_31081_b((double)((double)var2 + 0.625F), (double)((double)var2 + 0.625F), (double)((double)var3 + 0.375F), (double)((double)var3 + 0.625F), (double)((double)var4 - 0.25F + 1.0F - var12), (double)((double)var4 - 0.25F + 1.0F), var11 * 0.6F, var13);
+            this.func_31081_b((double)((double)var2 + 0.375F), (double)((double)var2 + 0.625F), (double)((double)var3 + 0.375F), (double)((double)var3 + 0.375F), (double)((double)var4 - 0.25F + 1.0F - var12), (double)((double)var4 - 0.25F + 1.0F), var11 * 0.5F, var13);
+            this.func_31081_b((double)((double)var2 + 0.625F), (double)((double)var2 + 0.375F), (double)((double)var3 + 0.625F), (double)((double)var3 + 0.625F), (double)((double)var4 - 0.25F + 1.0F - var12), (double)((double)var4 - 0.25F + 1.0F), var11, var13);
             break;
         case 4:
             this.field_31087_g = 1;
@@ -602,10 +602,10 @@ public class RenderBlocks {
             this.field_31082_l = 1;
             var1.setBlockBounds(0.0F, 0.0F, 0.0F, 0.25F, 1.0F, 1.0F);
             this.renderStandardBlock(var1, var2, var3, var4);
-            this.func_31077_c((double)((float)var2 + 0.25F), (double)((float)var2 + 0.25F + var12), (double)((float)var3 + 0.375F), (double)((float)var3 + 0.375F), (double)((float)var4 + 0.625F), (double)((float)var4 + 0.375F), var11 * 0.5F, var13);
-            this.func_31077_c((double)((float)var2 + 0.25F), (double)((float)var2 + 0.25F + var12), (double)((float)var3 + 0.625F), (double)((float)var3 + 0.625F), (double)((float)var4 + 0.375F), (double)((float)var4 + 0.625F), var11, var13);
-            this.func_31077_c((double)((float)var2 + 0.25F), (double)((float)var2 + 0.25F + var12), (double)((float)var3 + 0.375F), (double)((float)var3 + 0.625F), (double)((float)var4 + 0.375F), (double)((float)var4 + 0.375F), var11 * 0.6F, var13);
-            this.func_31077_c((double)((float)var2 + 0.25F), (double)((float)var2 + 0.25F + var12), (double)((float)var3 + 0.625F), (double)((float)var3 + 0.375F), (double)((float)var4 + 0.625F), (double)((float)var4 + 0.625F), var11 * 0.6F, var13);
+            this.func_31077_c((double)((double)var2 + 0.25F), (double)((double)var2 + 0.25F + var12), (double)((double)var3 + 0.375F), (double)((double)var3 + 0.375F), (double)((double)var4 + 0.625F), (double)((double)var4 + 0.375F), var11 * 0.5F, var13);
+            this.func_31077_c((double)((double)var2 + 0.25F), (double)((double)var2 + 0.25F + var12), (double)((double)var3 + 0.625F), (double)((double)var3 + 0.625F), (double)((double)var4 + 0.375F), (double)((double)var4 + 0.625F), var11, var13);
+            this.func_31077_c((double)((double)var2 + 0.25F), (double)((double)var2 + 0.25F + var12), (double)((double)var3 + 0.375F), (double)((double)var3 + 0.625F), (double)((double)var4 + 0.375F), (double)((double)var4 + 0.375F), var11 * 0.6F, var13);
+            this.func_31077_c((double)((double)var2 + 0.25F), (double)((double)var2 + 0.25F + var12), (double)((double)var3 + 0.625F), (double)((double)var3 + 0.375F), (double)((double)var4 + 0.625F), (double)((double)var4 + 0.625F), var11 * 0.6F, var13);
             break;
         case 5:
             this.field_31087_g = 2;
@@ -614,10 +614,10 @@ public class RenderBlocks {
             this.field_31082_l = 2;
             var1.setBlockBounds(0.75F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             this.renderStandardBlock(var1, var2, var3, var4);
-            this.func_31077_c((double)((float)var2 - 0.25F + 1.0F - var12), (double)((float)var2 - 0.25F + 1.0F), (double)((float)var3 + 0.375F), (double)((float)var3 + 0.375F), (double)((float)var4 + 0.625F), (double)((float)var4 + 0.375F), var11 * 0.5F, var13);
-            this.func_31077_c((double)((float)var2 - 0.25F + 1.0F - var12), (double)((float)var2 - 0.25F + 1.0F), (double)((float)var3 + 0.625F), (double)((float)var3 + 0.625F), (double)((float)var4 + 0.375F), (double)((float)var4 + 0.625F), var11, var13);
-            this.func_31077_c((double)((float)var2 - 0.25F + 1.0F - var12), (double)((float)var2 - 0.25F + 1.0F), (double)((float)var3 + 0.375F), (double)((float)var3 + 0.625F), (double)((float)var4 + 0.375F), (double)((float)var4 + 0.375F), var11 * 0.6F, var13);
-            this.func_31077_c((double)((float)var2 - 0.25F + 1.0F - var12), (double)((float)var2 - 0.25F + 1.0F), (double)((float)var3 + 0.625F), (double)((float)var3 + 0.375F), (double)((float)var4 + 0.625F), (double)((float)var4 + 0.625F), var11 * 0.6F, var13);
+            this.func_31077_c((double)((double)var2 - 0.25F + 1.0F - var12), (double)((double)var2 - 0.25F + 1.0F), (double)((double)var3 + 0.375F), (double)((double)var3 + 0.375F), (double)((double)var4 + 0.625F), (double)((double)var4 + 0.375F), var11 * 0.5F, var13);
+            this.func_31077_c((double)((double)var2 - 0.25F + 1.0F - var12), (double)((double)var2 - 0.25F + 1.0F), (double)((double)var3 + 0.625F), (double)((double)var3 + 0.625F), (double)((double)var4 + 0.375F), (double)((double)var4 + 0.625F), var11, var13);
+            this.func_31077_c((double)((double)var2 - 0.25F + 1.0F - var12), (double)((double)var2 - 0.25F + 1.0F), (double)((double)var3 + 0.375F), (double)((double)var3 + 0.625F), (double)((double)var4 + 0.375F), (double)((double)var4 + 0.375F), var11 * 0.6F, var13);
+            this.func_31077_c((double)((double)var2 - 0.25F + 1.0F - var12), (double)((double)var2 - 0.25F + 1.0F), (double)((double)var3 + 0.625F), (double)((double)var3 + 0.375F), (double)((double)var4 + 0.625F), (double)((double)var4 + 0.625F), var11 * 0.6F, var13);
         }
 
         this.field_31087_g = 0;
@@ -1035,10 +1035,10 @@ public class RenderBlocks {
             }
         }
 
-        float var31 = (float)(var2 + 0);
-        float var32 = (float)(var2 + 1);
-        float var33 = (float)(var4 + 0);
-        float var34 = (float)(var4 + 1);
+        double var31 = (double)(var2 + 0);
+        double var32 = (double)(var2 + 1);
+        double var33 = (double)(var4 + 0);
+        double var34 = (double)(var4 + 1);
         byte var35 = 0;
         if ((var26 || var27) && !var28 && !var29) {
             var35 = 1;
@@ -1128,54 +1128,54 @@ public class RenderBlocks {
             var21 = (double)(((float)var14 + 15.99F) / 256.0F);
             if (this.blockAccess.isBlockNormalCube(var2 - 1, var3, var4) && this.blockAccess.getBlockId(var2 - 1, var3 + 1, var4) == Block.redstoneWire.blockID) {
                 var5.setColorOpaque_F(var8 * var10, var8 * var11, var8 * var12);
-                var5.addVertexWithUV((double)((float)var2 + 0.015625F), (double)((float)(var3 + 1) + 0.021875F), (double)(var4 + 1), var17, var19);
-                var5.addVertexWithUV((double)((float)var2 + 0.015625F), (double)(var3 + 0), (double)(var4 + 1), var15, var19);
-                var5.addVertexWithUV((double)((float)var2 + 0.015625F), (double)(var3 + 0), (double)(var4 + 0), var15, var21);
-                var5.addVertexWithUV((double)((float)var2 + 0.015625F), (double)((float)(var3 + 1) + 0.021875F), (double)(var4 + 0), var17, var21);
+                var5.addVertexWithUV((double)((double)var2 + 0.015625F), (double)((double)(var3 + 1) + 0.021875F), (double)(var4 + 1), var17, var19);
+                var5.addVertexWithUV((double)((double)var2 + 0.015625F), (double)(var3 + 0), (double)(var4 + 1), var15, var19);
+                var5.addVertexWithUV((double)((double)var2 + 0.015625F), (double)(var3 + 0), (double)(var4 + 0), var15, var21);
+                var5.addVertexWithUV((double)((double)var2 + 0.015625F), (double)((double)(var3 + 1) + 0.021875F), (double)(var4 + 0), var17, var21);
                 var5.setColorOpaque_F(var8, var8, var8);
-                var5.addVertexWithUV((double)((float)var2 + 0.015625F), (double)((float)(var3 + 1) + 0.021875F), (double)(var4 + 1), var17, var19 + 0.0625D);
-                var5.addVertexWithUV((double)((float)var2 + 0.015625F), (double)(var3 + 0), (double)(var4 + 1), var15, var19 + 0.0625D);
-                var5.addVertexWithUV((double)((float)var2 + 0.015625F), (double)(var3 + 0), (double)(var4 + 0), var15, var21 + 0.0625D);
-                var5.addVertexWithUV((double)((float)var2 + 0.015625F), (double)((float)(var3 + 1) + 0.021875F), (double)(var4 + 0), var17, var21 + 0.0625D);
+                var5.addVertexWithUV((double)((double)var2 + 0.015625F), (double)((double)(var3 + 1) + 0.021875F), (double)(var4 + 1), var17, var19 + 0.0625D);
+                var5.addVertexWithUV((double)((double)var2 + 0.015625F), (double)(var3 + 0), (double)(var4 + 1), var15, var19 + 0.0625D);
+                var5.addVertexWithUV((double)((double)var2 + 0.015625F), (double)(var3 + 0), (double)(var4 + 0), var15, var21 + 0.0625D);
+                var5.addVertexWithUV((double)((double)var2 + 0.015625F), (double)((double)(var3 + 1) + 0.021875F), (double)(var4 + 0), var17, var21 + 0.0625D);
             }
 
             if (this.blockAccess.isBlockNormalCube(var2 + 1, var3, var4) && this.blockAccess.getBlockId(var2 + 1, var3 + 1, var4) == Block.redstoneWire.blockID) {
                 var5.setColorOpaque_F(var8 * var10, var8 * var11, var8 * var12);
-                var5.addVertexWithUV((double)((float)(var2 + 1) - 0.015625F), (double)(var3 + 0), (double)(var4 + 1), var15, var21);
-                var5.addVertexWithUV((double)((float)(var2 + 1) - 0.015625F), (double)((float)(var3 + 1) + 0.021875F), (double)(var4 + 1), var17, var21);
-                var5.addVertexWithUV((double)((float)(var2 + 1) - 0.015625F), (double)((float)(var3 + 1) + 0.021875F), (double)(var4 + 0), var17, var19);
-                var5.addVertexWithUV((double)((float)(var2 + 1) - 0.015625F), (double)(var3 + 0), (double)(var4 + 0), var15, var19);
+                var5.addVertexWithUV((double)((double)(var2 + 1) - 0.015625F), (double)(var3 + 0), (double)(var4 + 1), var15, var21);
+                var5.addVertexWithUV((double)((double)(var2 + 1) - 0.015625F), (double)((double)(var3 + 1) + 0.021875F), (double)(var4 + 1), var17, var21);
+                var5.addVertexWithUV((double)((double)(var2 + 1) - 0.015625F), (double)((double)(var3 + 1) + 0.021875F), (double)(var4 + 0), var17, var19);
+                var5.addVertexWithUV((double)((double)(var2 + 1) - 0.015625F), (double)(var3 + 0), (double)(var4 + 0), var15, var19);
                 var5.setColorOpaque_F(var8, var8, var8);
-                var5.addVertexWithUV((double)((float)(var2 + 1) - 0.015625F), (double)(var3 + 0), (double)(var4 + 1), var15, var21 + 0.0625D);
-                var5.addVertexWithUV((double)((float)(var2 + 1) - 0.015625F), (double)((float)(var3 + 1) + 0.021875F), (double)(var4 + 1), var17, var21 + 0.0625D);
-                var5.addVertexWithUV((double)((float)(var2 + 1) - 0.015625F), (double)((float)(var3 + 1) + 0.021875F), (double)(var4 + 0), var17, var19 + 0.0625D);
-                var5.addVertexWithUV((double)((float)(var2 + 1) - 0.015625F), (double)(var3 + 0), (double)(var4 + 0), var15, var19 + 0.0625D);
+                var5.addVertexWithUV((double)((double)(var2 + 1) - 0.015625F), (double)(var3 + 0), (double)(var4 + 1), var15, var21 + 0.0625D);
+                var5.addVertexWithUV((double)((double)(var2 + 1) - 0.015625F), (double)((double)(var3 + 1) + 0.021875F), (double)(var4 + 1), var17, var21 + 0.0625D);
+                var5.addVertexWithUV((double)((double)(var2 + 1) - 0.015625F), (double)((double)(var3 + 1) + 0.021875F), (double)(var4 + 0), var17, var19 + 0.0625D);
+                var5.addVertexWithUV((double)((double)(var2 + 1) - 0.015625F), (double)(var3 + 0), (double)(var4 + 0), var15, var19 + 0.0625D);
             }
 
             if (this.blockAccess.isBlockNormalCube(var2, var3, var4 - 1) && this.blockAccess.getBlockId(var2, var3 + 1, var4 - 1) == Block.redstoneWire.blockID) {
                 var5.setColorOpaque_F(var8 * var10, var8 * var11, var8 * var12);
-                var5.addVertexWithUV((double)(var2 + 1), (double)(var3 + 0), (double)((float)var4 + 0.015625F), var15, var21);
-                var5.addVertexWithUV((double)(var2 + 1), (double)((float)(var3 + 1) + 0.021875F), (double)((float)var4 + 0.015625F), var17, var21);
-                var5.addVertexWithUV((double)(var2 + 0), (double)((float)(var3 + 1) + 0.021875F), (double)((float)var4 + 0.015625F), var17, var19);
-                var5.addVertexWithUV((double)(var2 + 0), (double)(var3 + 0), (double)((float)var4 + 0.015625F), var15, var19);
+                var5.addVertexWithUV((double)(var2 + 1), (double)(var3 + 0), (double)((double)var4 + 0.015625F), var15, var21);
+                var5.addVertexWithUV((double)(var2 + 1), (double)((double)(var3 + 1) + 0.021875F), (double)((double)var4 + 0.015625F), var17, var21);
+                var5.addVertexWithUV((double)(var2 + 0), (double)((double)(var3 + 1) + 0.021875F), (double)((double)var4 + 0.015625F), var17, var19);
+                var5.addVertexWithUV((double)(var2 + 0), (double)(var3 + 0), (double)((double)var4 + 0.015625F), var15, var19);
                 var5.setColorOpaque_F(var8, var8, var8);
-                var5.addVertexWithUV((double)(var2 + 1), (double)(var3 + 0), (double)((float)var4 + 0.015625F), var15, var21 + 0.0625D);
-                var5.addVertexWithUV((double)(var2 + 1), (double)((float)(var3 + 1) + 0.021875F), (double)((float)var4 + 0.015625F), var17, var21 + 0.0625D);
-                var5.addVertexWithUV((double)(var2 + 0), (double)((float)(var3 + 1) + 0.021875F), (double)((float)var4 + 0.015625F), var17, var19 + 0.0625D);
-                var5.addVertexWithUV((double)(var2 + 0), (double)(var3 + 0), (double)((float)var4 + 0.015625F), var15, var19 + 0.0625D);
+                var5.addVertexWithUV((double)(var2 + 1), (double)(var3 + 0), (double)((double)var4 + 0.015625F), var15, var21 + 0.0625D);
+                var5.addVertexWithUV((double)(var2 + 1), (double)((double)(var3 + 1) + 0.021875F), (double)((double)var4 + 0.015625F), var17, var21 + 0.0625D);
+                var5.addVertexWithUV((double)(var2 + 0), (double)((double)(var3 + 1) + 0.021875F), (double)((double)var4 + 0.015625F), var17, var19 + 0.0625D);
+                var5.addVertexWithUV((double)(var2 + 0), (double)(var3 + 0), (double)((double)var4 + 0.015625F), var15, var19 + 0.0625D);
             }
 
             if (this.blockAccess.isBlockNormalCube(var2, var3, var4 + 1) && this.blockAccess.getBlockId(var2, var3 + 1, var4 + 1) == Block.redstoneWire.blockID) {
                 var5.setColorOpaque_F(var8 * var10, var8 * var11, var8 * var12);
-                var5.addVertexWithUV((double)(var2 + 1), (double)((float)(var3 + 1) + 0.021875F), (double)((float)(var4 + 1) - 0.015625F), var17, var19);
-                var5.addVertexWithUV((double)(var2 + 1), (double)(var3 + 0), (double)((float)(var4 + 1) - 0.015625F), var15, var19);
-                var5.addVertexWithUV((double)(var2 + 0), (double)(var3 + 0), (double)((float)(var4 + 1) - 0.015625F), var15, var21);
-                var5.addVertexWithUV((double)(var2 + 0), (double)((float)(var3 + 1) + 0.021875F), (double)((float)(var4 + 1) - 0.015625F), var17, var21);
+                var5.addVertexWithUV((double)(var2 + 1), (double)((double)(var3 + 1) + 0.021875F), (double)((double)(var4 + 1) - 0.015625F), var17, var19);
+                var5.addVertexWithUV((double)(var2 + 1), (double)(var3 + 0), (double)((double)(var4 + 1) - 0.015625F), var15, var19);
+                var5.addVertexWithUV((double)(var2 + 0), (double)(var3 + 0), (double)((double)(var4 + 1) - 0.015625F), var15, var21);
+                var5.addVertexWithUV((double)(var2 + 0), (double)((double)(var3 + 1) + 0.021875F), (double)((double)(var4 + 1) - 0.015625F), var17, var21);
                 var5.setColorOpaque_F(var8, var8, var8);
-                var5.addVertexWithUV((double)(var2 + 1), (double)((float)(var3 + 1) + 0.021875F), (double)((float)(var4 + 1) - 0.015625F), var17, var19 + 0.0625D);
-                var5.addVertexWithUV((double)(var2 + 1), (double)(var3 + 0), (double)((float)(var4 + 1) - 0.015625F), var15, var19 + 0.0625D);
-                var5.addVertexWithUV((double)(var2 + 0), (double)(var3 + 0), (double)((float)(var4 + 1) - 0.015625F), var15, var21 + 0.0625D);
-                var5.addVertexWithUV((double)(var2 + 0), (double)((float)(var3 + 1) + 0.021875F), (double)((float)(var4 + 1) - 0.015625F), var17, var21 + 0.0625D);
+                var5.addVertexWithUV((double)(var2 + 1), (double)((double)(var3 + 1) + 0.021875F), (double)((double)(var4 + 1) - 0.015625F), var17, var19 + 0.0625D);
+                var5.addVertexWithUV((double)(var2 + 1), (double)(var3 + 0), (double)((double)(var4 + 1) - 0.015625F), var15, var19 + 0.0625D);
+                var5.addVertexWithUV((double)(var2 + 0), (double)(var3 + 0), (double)((double)(var4 + 1) - 0.015625F), var15, var21 + 0.0625D);
+                var5.addVertexWithUV((double)(var2 + 0), (double)((double)(var3 + 1) + 0.021875F), (double)((double)(var4 + 1) - 0.015625F), var17, var21 + 0.0625D);
             }
         }
 
@@ -1203,35 +1203,35 @@ public class RenderBlocks {
         double var15 = (double)((float)var10 / 256.0F);
         double var17 = (double)(((float)var10 + 15.99F) / 256.0F);
         float var19 = 0.0625F;
-        float var20 = (float)(var2 + 1);
-        float var21 = (float)(var2 + 1);
-        float var22 = (float)(var2 + 0);
-        float var23 = (float)(var2 + 0);
-        float var24 = (float)(var4 + 0);
-        float var25 = (float)(var4 + 1);
-        float var26 = (float)(var4 + 1);
-        float var27 = (float)(var4 + 0);
-        float var28 = (float)var3 + var19;
-        float var29 = (float)var3 + var19;
-        float var30 = (float)var3 + var19;
-        float var31 = (float)var3 + var19;
+        double var20 = (double)(var2 + 1);
+        double var21 = (double)(var2 + 1);
+        double var22 = (double)(var2 + 0);
+        double var23 = (double)(var2 + 0);
+        double var24 = (double)(var4 + 0);
+        double var25 = (double)(var4 + 1);
+        double var26 = (double)(var4 + 1);
+        double var27 = (double)(var4 + 0);
+        double var28 = (double)var3 + var19;
+        double var29 = (double)var3 + var19;
+        double var30 = (double)var3 + var19;
+        double var31 = (double)var3 + var19;
         if (var6 != 1 && var6 != 2 && var6 != 3 && var6 != 7) {
             if (var6 == 8) {
-                var20 = var21 = (float)(var2 + 0);
-                var22 = var23 = (float)(var2 + 1);
-                var24 = var27 = (float)(var4 + 1);
-                var25 = var26 = (float)(var4 + 0);
+                var20 = var21 = (double)(var2 + 0);
+                var22 = var23 = (double)(var2 + 1);
+                var24 = var27 = (double)(var4 + 1);
+                var25 = var26 = (double)(var4 + 0);
             } else if (var6 == 9) {
-                var20 = var23 = (float)(var2 + 0);
-                var21 = var22 = (float)(var2 + 1);
-                var24 = var25 = (float)(var4 + 0);
-                var26 = var27 = (float)(var4 + 1);
+                var20 = var23 = (double)(var2 + 0);
+                var21 = var22 = (double)(var2 + 1);
+                var24 = var25 = (double)(var4 + 0);
+                var26 = var27 = (double)(var4 + 1);
             }
         } else {
-            var20 = var23 = (float)(var2 + 1);
-            var21 = var22 = (float)(var2 + 0);
-            var24 = var25 = (float)(var4 + 1);
-            var26 = var27 = (float)(var4 + 0);
+            var20 = var23 = (double)(var2 + 1);
+            var21 = var22 = (double)(var2 + 0);
+            var24 = var25 = (double)(var4 + 1);
+            var26 = var27 = (double)(var4 + 0);
         }
 
         if (var6 != 2 && var6 != 4) {
@@ -1274,31 +1274,31 @@ public class RenderBlocks {
         float var19 = 0.0F;
         float var20 = 0.05F;
         if (var18 == 5) {
-            var5.addVertexWithUV((double)((float)var2 + var20), (double)((float)(var3 + 1) + var19), (double)((float)(var4 + 1) + var19), var10, var14);
-            var5.addVertexWithUV((double)((float)var2 + var20), (double)((float)(var3 + 0) - var19), (double)((float)(var4 + 1) + var19), var10, var16);
-            var5.addVertexWithUV((double)((float)var2 + var20), (double)((float)(var3 + 0) - var19), (double)((float)(var4 + 0) - var19), var12, var16);
-            var5.addVertexWithUV((double)((float)var2 + var20), (double)((float)(var3 + 1) + var19), (double)((float)(var4 + 0) - var19), var12, var14);
+            var5.addVertexWithUV((double)((double)var2 + var20), (double)((double)(var3 + 1) + var19), (double)((double)(var4 + 1) + var19), var10, var14);
+            var5.addVertexWithUV((double)((double)var2 + var20), (double)((double)(var3 + 0) - var19), (double)((double)(var4 + 1) + var19), var10, var16);
+            var5.addVertexWithUV((double)((double)var2 + var20), (double)((double)(var3 + 0) - var19), (double)((double)(var4 + 0) - var19), var12, var16);
+            var5.addVertexWithUV((double)((double)var2 + var20), (double)((double)(var3 + 1) + var19), (double)((double)(var4 + 0) - var19), var12, var14);
         }
 
         if (var18 == 4) {
-            var5.addVertexWithUV((double)((float)(var2 + 1) - var20), (double)((float)(var3 + 0) - var19), (double)((float)(var4 + 1) + var19), var12, var16);
-            var5.addVertexWithUV((double)((float)(var2 + 1) - var20), (double)((float)(var3 + 1) + var19), (double)((float)(var4 + 1) + var19), var12, var14);
-            var5.addVertexWithUV((double)((float)(var2 + 1) - var20), (double)((float)(var3 + 1) + var19), (double)((float)(var4 + 0) - var19), var10, var14);
-            var5.addVertexWithUV((double)((float)(var2 + 1) - var20), (double)((float)(var3 + 0) - var19), (double)((float)(var4 + 0) - var19), var10, var16);
+            var5.addVertexWithUV((double)((double)(var2 + 1) - var20), (double)((double)(var3 + 0) - var19), (double)((double)(var4 + 1) + var19), var12, var16);
+            var5.addVertexWithUV((double)((double)(var2 + 1) - var20), (double)((double)(var3 + 1) + var19), (double)((double)(var4 + 1) + var19), var12, var14);
+            var5.addVertexWithUV((double)((double)(var2 + 1) - var20), (double)((double)(var3 + 1) + var19), (double)((double)(var4 + 0) - var19), var10, var14);
+            var5.addVertexWithUV((double)((double)(var2 + 1) - var20), (double)((double)(var3 + 0) - var19), (double)((double)(var4 + 0) - var19), var10, var16);
         }
 
         if (var18 == 3) {
-            var5.addVertexWithUV((double)((float)(var2 + 1) + var19), (double)((float)(var3 + 0) - var19), (double)((float)var4 + var20), var12, var16);
-            var5.addVertexWithUV((double)((float)(var2 + 1) + var19), (double)((float)(var3 + 1) + var19), (double)((float)var4 + var20), var12, var14);
-            var5.addVertexWithUV((double)((float)(var2 + 0) - var19), (double)((float)(var3 + 1) + var19), (double)((float)var4 + var20), var10, var14);
-            var5.addVertexWithUV((double)((float)(var2 + 0) - var19), (double)((float)(var3 + 0) - var19), (double)((float)var4 + var20), var10, var16);
+            var5.addVertexWithUV((double)((double)(var2 + 1) + var19), (double)((double)(var3 + 0) - var19), (double)((double)var4 + var20), var12, var16);
+            var5.addVertexWithUV((double)((double)(var2 + 1) + var19), (double)((double)(var3 + 1) + var19), (double)((double)var4 + var20), var12, var14);
+            var5.addVertexWithUV((double)((double)(var2 + 0) - var19), (double)((double)(var3 + 1) + var19), (double)((double)var4 + var20), var10, var14);
+            var5.addVertexWithUV((double)((double)(var2 + 0) - var19), (double)((double)(var3 + 0) - var19), (double)((double)var4 + var20), var10, var16);
         }
 
         if (var18 == 2) {
-            var5.addVertexWithUV((double)((float)(var2 + 1) + var19), (double)((float)(var3 + 1) + var19), (double)((float)(var4 + 1) - var20), var10, var14);
-            var5.addVertexWithUV((double)((float)(var2 + 1) + var19), (double)((float)(var3 + 0) - var19), (double)((float)(var4 + 1) - var20), var10, var16);
-            var5.addVertexWithUV((double)((float)(var2 + 0) - var19), (double)((float)(var3 + 0) - var19), (double)((float)(var4 + 1) - var20), var12, var16);
-            var5.addVertexWithUV((double)((float)(var2 + 0) - var19), (double)((float)(var3 + 1) + var19), (double)((float)(var4 + 1) - var20), var12, var14);
+            var5.addVertexWithUV((double)((double)(var2 + 1) + var19), (double)((double)(var3 + 1) + var19), (double)((double)(var4 + 1) - var20), var10, var14);
+            var5.addVertexWithUV((double)((double)(var2 + 1) + var19), (double)((double)(var3 + 0) - var19), (double)((double)(var4 + 1) - var20), var10, var16);
+            var5.addVertexWithUV((double)((double)(var2 + 0) - var19), (double)((double)(var3 + 0) - var19), (double)((double)(var4 + 1) - var20), var12, var16);
+            var5.addVertexWithUV((double)((double)(var2 + 0) - var19), (double)((double)(var3 + 1) + var19), (double)((double)(var4 + 1) - var20), var12, var14);
         }
 
         return true;
@@ -1482,6 +1482,9 @@ public class RenderBlocks {
     }
 
     public boolean renderBlockFluids(Block var1, int var2, int var3, int var4) {
+        
+        float Var38_f;
+        
         Tessellator var5 = Tessellator.instance;
         int var6 = var1.colorMultiplier(this.blockAccess, var2, var3, var4);
         float var7 = (float)(var6 >> 16 & 255) / 255.0F;
@@ -1508,9 +1511,9 @@ public class RenderBlocks {
             float var27 = this.func_1224_a(var2 + 1, var3, var4, var22);
             int var28;
             int var31;
-            float var36;
-            float var37;
-            float var38;
+            double var36;
+            double var37;
+            double var38;
             if (this.renderAllFaces || var10) {
                 var13 = true;
                 var28 = var1.getBlockTextureFromSideAndMetadata(1, var23);
@@ -1526,18 +1529,18 @@ public class RenderBlocks {
                 if (var29 < -999.0F) {
                     var29 = 0.0F;
                 } else {
-                    var32 = (double)((float)(var30 + 16) / 256.0F);
-                    var34 = (double)((float)(var31 + 16) / 256.0F);
+                    var32 = (double)((double)(var30 + 16) / 256.0F);
+                    var34 = (double)((double)(var31 + 16) / 256.0F);
                 }
 
                 var36 = MathHelper.sin(var29) * 8.0F / 256.0F;
                 var37 = MathHelper.cos(var29) * 8.0F / 256.0F;
-                var38 = var1.getBlockBrightness(this.blockAccess, var2, var3, var4);
-                var5.setColorOpaque_F(var15 * var38 * var7, var15 * var38 * var8, var15 * var38 * var9);
-                var5.addVertexWithUV((double)(var2 + 0), (double)((float)var3 + var24), (double)(var4 + 0), var32 - (double)var37 - (double)var36, var34 - (double)var37 + (double)var36);
-                var5.addVertexWithUV((double)(var2 + 0), (double)((float)var3 + var25), (double)(var4 + 1), var32 - (double)var37 + (double)var36, var34 + (double)var37 + (double)var36);
-                var5.addVertexWithUV((double)(var2 + 1), (double)((float)var3 + var26), (double)(var4 + 1), var32 + (double)var37 + (double)var36, var34 + (double)var37 - (double)var36);
-                var5.addVertexWithUV((double)(var2 + 1), (double)((float)var3 + var27), (double)(var4 + 0), var32 + (double)var37 - (double)var36, var34 - (double)var37 - (double)var36);
+                Var38_f = var1.getBlockBrightness(this.blockAccess, var2, var3, var4);
+                var5.setColorOpaque_F(var15 * Var38_f * var7, var15 * Var38_f * var8, var15 * Var38_f * var9);
+                var5.addVertexWithUV((double)(var2 + 0), (double)((double)var3 + var24), (double)(var4 + 0), var32 - (double)var37 - (double)var36, var34 - (double)var37 + (double)var36);
+                var5.addVertexWithUV((double)(var2 + 0), (double)((double)var3 + var25), (double)(var4 + 1), var32 - (double)var37 + (double)var36, var34 + (double)var37 + (double)var36);
+                var5.addVertexWithUV((double)(var2 + 1), (double)((double)var3 + var26), (double)(var4 + 1), var32 + (double)var37 + (double)var36, var34 + (double)var37 - (double)var36);
+                var5.addVertexWithUV((double)(var2 + 1), (double)((double)var3 + var27), (double)(var4 + 0), var32 + (double)var37 - (double)var36, var34 - (double)var37 - (double)var36);
             }
 
             if (this.renderAllFaces || var11) {
@@ -1570,44 +1573,44 @@ public class RenderBlocks {
                 int var33 = (var54 & 15) << 4;
                 int var55 = var54 & 240;
                 if (this.renderAllFaces || var12[var28]) {
-                    float var35;
-                    float var39;
-                    float var40;
+                    double var35;
+                    double var39;
+                    double var40;
                     if (var28 == 0) {
                         var35 = var24;
                         var36 = var27;
-                        var37 = (float)var2;
-                        var39 = (float)(var2 + 1);
-                        var38 = (float)var4;
-                        var40 = (float)var4;
+                        var37 = (double)var2;
+                        var39 = (double)(var2 + 1);
+                        var38 = (double)var4;
+                        var40 = (double)var4;
                     } else if (var28 == 1) {
                         var35 = var26;
                         var36 = var25;
-                        var37 = (float)(var2 + 1);
-                        var39 = (float)var2;
-                        var38 = (float)(var4 + 1);
-                        var40 = (float)(var4 + 1);
+                        var37 = (double)(var2 + 1);
+                        var39 = (double)var2;
+                        var38 = (double)(var4 + 1);
+                        var40 = (double)(var4 + 1);
                     } else if (var28 == 2) {
                         var35 = var25;
                         var36 = var24;
-                        var37 = (float)var2;
-                        var39 = (float)var2;
-                        var38 = (float)(var4 + 1);
-                        var40 = (float)var4;
+                        var37 = (double)var2;
+                        var39 = (double)var2;
+                        var38 = (double)(var4 + 1);
+                        var40 = (double)var4;
                     } else {
                         var35 = var27;
                         var36 = var26;
-                        var37 = (float)(var2 + 1);
-                        var39 = (float)(var2 + 1);
-                        var38 = (float)var4;
-                        var40 = (float)(var4 + 1);
+                        var37 = (double)(var2 + 1);
+                        var39 = (double)(var2 + 1);
+                        var38 = (double)var4;
+                        var40 = (double)(var4 + 1);
                     }
 
                     var13 = true;
-                    double var41 = (double)((float)(var33 + 0) / 256.0F);
+                    double var41 = (double)((double)(var33 + 0) / 256.0F);
                     double var43 = ((double)(var33 + 16) - 0.01D) / 256.0D;
-                    double var45 = (double)(((float)var55 + (1.0F - var35) * 16.0F) / 256.0F);
-                    double var47 = (double)(((float)var55 + (1.0F - var36) * 16.0F) / 256.0F);
+                    double var45 = (double)(((double)var55 + (1.0F - var35) * 16.0F) / 256.0F);
+                    double var47 = (double)(((double)var55 + (1.0F - var36) * 16.0F) / 256.0F);
                     double var49 = ((double)(var55 + 16) - 0.01D) / 256.0D;
                     float var51 = var1.getBlockBrightness(this.blockAccess, var53, var3, var31);
                     if (var28 < 2) {
@@ -1617,8 +1620,8 @@ public class RenderBlocks {
                     }
 
                     var5.setColorOpaque_F(var15 * var51 * var7, var15 * var51 * var8, var15 * var51 * var9);
-                    var5.addVertexWithUV((double)var37, (double)((float)var3 + var35), (double)var38, var41, var45);
-                    var5.addVertexWithUV((double)var39, (double)((float)var3 + var36), (double)var40, var43, var47);
+                    var5.addVertexWithUV((double)var37, (double)((double)var3 + var35), (double)var38, var41, var45);
+                    var5.addVertexWithUV((double)var39, (double)((double)var3 + var36), (double)var40, var43, var47);
                     var5.addVertexWithUV((double)var39, (double)(var3 + 0), (double)var40, var43, var49);
                     var5.addVertexWithUV((double)var37, (double)(var3 + 0), (double)var38, var41, var49);
                 }

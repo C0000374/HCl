@@ -16,7 +16,7 @@
 #ifndef $$IG$CATHACK_INC
 #define $$IG$CATHACK_INC
 
-#define VERSION	"20261017"
+#define VERSION	"20261018"
 
 #define IN
 #define OUT
