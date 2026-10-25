@@ -25,7 +25,7 @@ public abstract class BSE$STGOBJ {
     
     public
     BSE$STGOBJ(
-        String Id
+        IN String Id
         )
     {
         this.Id = Id;
@@ -44,5 +44,12 @@ public abstract class BSE$STGOBJ {
     void
     ReadFromNbt(
         IN NBTTagCompound CompoundTag
+        );
+        
+    public
+    abstract
+    boolean
+    ParseCommand(
+        IN String[] Arguments
         );
 }

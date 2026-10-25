@@ -1,0 +1,70 @@
+package io.github.C0000374.HCl.Settings;
+
+#include <HCL.INC>
+
+import io.github.C0000374.HCl.BSE$STGOBJ;
+import net.minecraft.src.NBTTagByte;
+import net.minecraft.src.NBTTagCompound;
+
+public final class CBoolean extends BSE$STGOBJ {
+    
+    public boolean Value;
+    
+    public
+    CBoolean(
+        IN String Id,
+        IN boolean Value
+        )
+    {
+        super(Id);
+        this.Value = Value;
+        return;
+    }
+    
+    @Override
+    public
+    void
+    WriteToNbt(
+        OUT NBTTagCompound CompoundTag
+        )
+    {
+        CompoundTag.setBoolean(this.Id, this.Value);
+        return;
+    }
+    
+    @Override
+    public
+    void
+    ReadFromNbt(
+        IN NBTTagCompound CompoundTag
+        )
+    {
+        if (CompoundTag.hasKey(this.Id) && (CompoundTag.GetTag(this.Id) instanceof NBTTagByte))
+            this.Value = CompoundTag.getBoolean(this.Id);
+        return;
+    }
+    
+    @Override
+    public
+    boolean
+    ParseCommand(
+        IN String[] Arguments
+        )
+    {
+        if (Arguments.length != 1) return false;
+        
+        if (Arguments[0].equalsIgnoreCase("true")) this.Value = true;
+        else if (Arguments[0].equalsIgnoreCase("false")) this.Value = false;
+        else return false;
+        return true;
+    }
+    
+    @Override
+    public
+    String
+    toString(
+        )
+    {
+        return "" + this.Value;
+    }
+}

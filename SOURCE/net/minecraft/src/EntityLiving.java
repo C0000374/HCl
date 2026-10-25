@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import io.github.C0000374.HCl.Modules.Player.CNoPush;
 import java.util.List;
 
 public abstract class EntityLiving extends Entity {
@@ -390,6 +391,7 @@ public abstract class EntityLiving extends Entity {
     }
 
     public void knockBack(Entity var1, int var2, double var3, double var5) {
+        if ((this instanceof EntityPlayerSP) && CNoPush.Instance.IsActive && CNoPush.Instance.NoKnockBack.Value) return;
         float var7 = MathHelper.sqrt_double(var3 * var3 + var5 * var5);
         float var8 = 0.4F;
         this.motionX /= 2.0D;
@@ -640,16 +642,16 @@ public abstract class EntityLiving extends Entity {
         this.moveForward *= 0.98F;
         this.randomYawVelocity *= 0.9F;
         this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
+        
         List var15 = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
         if (var15 != null && var15.size() > 0) {
             for(int var4 = 0; var4 < var15.size(); ++var4) {
                 Entity var16 = (Entity)var15.get(var4);
-                if (var16.canBePushed()) {
+                if (var16.canBePushed() && !(var16 instanceof EntityPlayerSP) && !(this instanceof EntityPlayerSP)) {
                     var16.applyEntityCollision(this);
                 }
             }
         }
-
     }
 
     protected boolean isMovementBlocked() {

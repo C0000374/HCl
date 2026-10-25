@@ -1,6 +1,7 @@
 package net.minecraft.src;
 
 import io.github.C0000374.HCl.Modules.Player.CNoFallDamage;
+import io.github.C0000374.HCl.Modules.Player.CNoPush;
 import io.github.C0000374.HCl.Modules.Render.FreeCamera.CFreeCamera;
 import net.minecraft.client.Minecraft;
 
@@ -92,10 +93,13 @@ public class EntityPlayerSP extends EntityPlayer {
             this.ySize = 0.2F;
         }
 
-        this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double)this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
-        this.pushOutOfBlocks(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double)this.width * 0.35D);
+        if (!(CNoPush.Instance.IsActive && CNoPush.Instance.NoPushOutOfBlocks.Value)) {
+            
+            this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double)this.width * 0.35D);
+            this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
+            this.pushOutOfBlocks(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
+            this.pushOutOfBlocks(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double)this.width * 0.35D);
+        }
         
         this.mc.Client.BSE$SendEvent(4, null, null);
         

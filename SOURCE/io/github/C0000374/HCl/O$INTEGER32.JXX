@@ -7,7 +7,7 @@ public final class O$INTEGER32 {
     
     public
     O$INTEGER32(
-        int Value
+        IN int Value
         )
     {
         this.Value = Value;

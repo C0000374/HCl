@@ -1,0 +1,26 @@
+package io.github.C0000374.HCl.Modules.Player;
+
+#include <HCL.INC>
+
+import io.github.C0000374.HCl.BSE$MODOBJ;
+import io.github.C0000374.HCl.CClient;
+import io.github.C0000374.HCl.Settings.CBoolean;
+
+public final class CNoPush extends BSE$MODOBJ {
+    
+    public static CNoPush Instance;
+    public CBoolean NoPushOutOfBlocks = new CBoolean("NoPushOutOfBlocks", false);
+    public CBoolean NoKnockBack = new CBoolean("NoKnockBack", true);
+    
+    public
+    CNoPush(
+        IN CClient Client
+        )
+    {
+        super("NoPush", 0);
+        Instance = this;
+        Client.BSE$RegisterModuleSetting(this, NoPushOutOfBlocks);
+        Client.BSE$RegisterModuleSetting(this, NoKnockBack);
+        return;
+    }
+}

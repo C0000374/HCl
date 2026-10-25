@@ -20,11 +20,14 @@ package io.github.C0000374.HCl;
 #include <HCL.INC>
 
 import io.github.C0000374.HCl.Commands.CBind;
+import io.github.C0000374.HCl.Commands.CSet;
+import io.github.C0000374.HCl.Commands.CShow;
 import io.github.C0000374.HCl.Commands.CToggle;
 import io.github.C0000374.HCl.Gui.CCategory;
 import io.github.C0000374.HCl.Modules.Combat.CAutoEat;
 import io.github.C0000374.HCl.Modules.Movement.CWalkOnLiquid;
 import io.github.C0000374.HCl.Modules.Player.CNoFallDamage;
+import io.github.C0000374.HCl.Modules.Player.CNoPush;
 import io.github.C0000374.HCl.Modules.Player.CRetard;
 import io.github.C0000374.HCl.Modules.Render.CFullBright;
 import io.github.C0000374.HCl.Modules.Render.FreeCamera.CFreeCamera;
@@ -90,6 +93,8 @@ public final class CClient {
         //-
         
         this.BSE$RegisterCommand(new CBind(this));
+        this.BSE$RegisterCommand(new CSet(this));
+        this.BSE$RegisterCommand(new CShow(this));
         this.BSE$RegisterCommand(new CToggle(this));
         
         this.BSE$RegisterModule(new CAutoEat(MinecraftInstance));
@@ -97,6 +102,7 @@ public final class CClient {
         this.BSE$RegisterModule(new CFullBright(MinecraftInstance));
         this.BSE$RegisterModule(new CInstantMine());
         this.BSE$RegisterModule(new CNoFallDamage());
+        this.BSE$RegisterModule(new CNoPush(this));
         this.BSE$RegisterModule(new CRetard());
         this.BSE$RegisterModule(new CShowCoordinates());
         this.BSE$RegisterModule(new CWalkOnLiquid());
@@ -126,6 +132,7 @@ public final class CClient {
             0x000000FF,
             new BSE$MODOBJ[] {
                 CNoFallDamage.Instance,
+                CNoPush.Instance,
                 CRetard.Instance
             }
         );
@@ -296,8 +303,7 @@ public final class CClient {
         if (Arguments.length > 0) {
             
             CommandHandler = BSE$GetCommand(Arguments[0]);
-            if (CommandHandler == null) this.BSE$InvalidCommand(Command);
-            else CommandHandler.Execute(Arguments, Command);
+            if (CommandHandler == null || !CommandHandler.Execute(Arguments, Command)) this.BSE$InvalidCommand(Command);
         }
         return;
     }
@@ -459,7 +465,7 @@ public final class CClient {
         i = this.BSE$Modules.values().iterator();
         while (i.hasNext()) {
             Module = i.next();
-            if (Module.KeyBinding == Key) this.BSE$ToggleModule(Module);
+            if (Module.KeyBinding == Key) this.BSE$ExecuteCommand("TOGGLE " + Module.Id);
         }
         return;
     }
@@ -506,7 +512,7 @@ final class UI$CompareModules implements Comparator<BSE$MODOBJ> {
     
     public
     UI$CompareModules(
-        FontRenderer FRenderer
+        IN FontRenderer FRenderer
         )
     {
         this.FRenderer = FRenderer;
@@ -517,8 +523,8 @@ final class UI$CompareModules implements Comparator<BSE$MODOBJ> {
     public
     int
     compare(
-        BSE$MODOBJ A,
-        BSE$MODOBJ B
+        IN BSE$MODOBJ A,
+        IN BSE$MODOBJ B
         )
     {
         if (this.FRenderer.getStringWidth(A.Id) > this.FRenderer.getStringWidth(B.Id)) return -1;

@@ -7,7 +7,7 @@ public final class O$INTEGER16 {
     
     public
     O$INTEGER16(
-        short Value
+        IN short Value
         )
     {
         this.Value = Value;

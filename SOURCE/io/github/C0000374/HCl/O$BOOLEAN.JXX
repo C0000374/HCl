@@ -7,7 +7,7 @@ public final class O$BOOLEAN {
     
     public
     O$BOOLEAN(
-        boolean Value
+        IN boolean Value
         )
     {
         this.Value = Value;

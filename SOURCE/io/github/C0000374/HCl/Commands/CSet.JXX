@@ -1,0 +1,49 @@
+package io.github.C0000374.HCl.Commands;
+
+#include <HCL.INC>
+
+import io.github.C0000374.HCl.BSE$CMDOBJ;
+import io.github.C0000374.HCl.BSE$MODOBJ;
+import io.github.C0000374.HCl.BSE$STGOBJ;
+import io.github.C0000374.HCl.CClient;
+
+public final class CSet extends BSE$CMDOBJ {
+
+    public CClient Client;
+    
+    public
+    CSet(
+        IN CClient Client
+        )
+    {
+        super("Set");
+        this.Client = Client;
+        return;
+    }
+    
+    @Override
+    public
+    boolean
+    Execute(
+        IN String[] Arguments,
+        IN String Command
+        )
+    {
+        BSE$MODOBJ Module;
+        BSE$STGOBJ Setting;
+        int i;
+        String[] SettingCommandArguments;
+        
+        if (Arguments.length < 4) return false;
+        
+        Module = this.Client.BSE$GetModule(Arguments[1]);
+        if (Module == null) return false;
+        
+        Setting = this.Client.BSE$GetModuleSetting(Module, Arguments[2]);
+        if (Setting == null) return false;
+        
+        SettingCommandArguments = new String[Arguments.length - 3];
+        for (i = 3; i < Arguments.length; i++) SettingCommandArguments[i - 3] = Arguments[i];
+        return Setting.ParseCommand(SettingCommandArguments);
+    }
+}

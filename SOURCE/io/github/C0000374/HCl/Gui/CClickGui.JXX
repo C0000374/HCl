@@ -73,10 +73,10 @@ abstract class ACWindowProcedure {
     abstract
     void
     WindowProcedure(
-        int hWindow,
-        int MessageId,
-        Object wParam,
-        Object lParam
+        IN int hWindow,
+        IN int MessageId,
+        IN OUT Object wParam OPTIONAL,
+        IN OUT Object lParam OPTIONAL
         );
 }
 
@@ -104,7 +104,7 @@ public final class CClickGui extends GuiScreen {
     
     public
     CClickGui(
-        Minecraft MinecraftInstance
+        IN Minecraft MinecraftInstance
         )
     {
         Iterator<CCategory> I;
@@ -161,7 +161,7 @@ public final class CClickGui extends GuiScreen {
     public
     void
     UI$SaveConfiguration(
-        NBTTagCompound ClickGuiTag
+        IN NBTTagCompound ClickGuiTag
         )
     //++
     //
@@ -203,9 +203,9 @@ public final class CClickGui extends GuiScreen {
     @Override
     public void
     drawScreen(
-        int i0,
-        int i1,
-        float f0
+        IN int i0,
+        IN int i1,
+        IN float f0
         )
     {
         int i;
@@ -438,9 +438,9 @@ public final class CClickGui extends GuiScreen {
     public
     boolean
     WM$RegisterClass(
-        String ClassId,
-        ACWindowProcedure WindowProcedure,
-        int Flags
+        IN String ClassId,
+        IN ACWindowProcedure WindowProcedure,
+        IN int Flags
         )
     {
         CLASSOBJ ClassObj;
@@ -462,15 +462,15 @@ public final class CClickGui extends GuiScreen {
     public
     int
     WM$CreateWindow(
-        String Title,
-        String ClassId,
-        int Flags,
-        int hParent,
-        int X,
-        int Y,
-        int Width,
-        int Height,
-        Object lParam
+        IN String Title,
+        IN String ClassId,
+        IN int Flags,
+        IN int hParent,
+        IN int X,
+        IN int Y,
+        IN int Width,
+        IN int Height,
+        IN OUT Object lParam OPTIONAL
         )
     {
         WINDOWOBJ WindowObj;
@@ -519,7 +519,7 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DrawWindow(
-        int hWindow
+        IN int hWindow
         )
     {
         WINDOWOBJ WindowObj;
@@ -567,7 +567,7 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$GetDrawCoords(
-        WINDOWOBJ WindowObj
+        IN WINDOWOBJ WindowObj
         )
     {        
         this.WM$DrawX += WindowObj.X;
@@ -580,10 +580,10 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DrawHorizontalLine(
-        int X1,
-        int X2,
-        int Y,
-        int Color
+        IN int X1,
+        IN int X2,
+        IN int Y,
+        IN int Color
         )
     {
         this.drawHorizontalLine(this.WM$DrawX + X1, this.WM$DrawX + X2, this.WM$DrawY + Y, Color);
@@ -593,10 +593,10 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DrawVerticalLine(
-        int X,
-        int Y1,
-        int Y2,
-        int Color
+        IN int X,
+        IN int Y1,
+        IN int Y2,
+        IN int Color
         )
     {
         this.drawVerticalLine(this.WM$DrawX + X, this.WM$DrawY + Y1, this.WM$DrawY + Y2, Color);
@@ -606,11 +606,11 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DrawRectangle(
-        int X1,
-        int Y1,
-        int X2,
-        int Y2,
-        int Color
+        IN int X1,
+        IN int Y1,
+        IN int X2,
+        IN int Y2,
+        IN int Color
         )
     {
         this.drawRect(this.WM$DrawX + X1, this.WM$DrawY + Y1, this.WM$DrawX + X2, this.WM$DrawY + Y2, Color);
@@ -620,12 +620,12 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DrawGradientRectangle(
-        int X1,
-        int Y1,
-        int X2,
-        int Y2,
-        int Color1,
-        int Color2
+        IN int X1,
+        IN int Y1,
+        IN int X2,
+        IN int Y2,
+        IN int Color1,
+        IN int Color2
         )
     {
         this.drawGradientRect(this.WM$DrawX + X1, this.WM$DrawY + Y1, this.WM$DrawX + X2, this.WM$DrawY + Y2, Color1, Color2);
@@ -635,10 +635,10 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DrawCenteredString(
-        String Str,
-        int X,
-        int Y,
-        int Color
+        IN String Str,
+        IN int X,
+        IN int Y,
+        IN int Color
         )
     {
         this.drawCenteredString(this.MinecraftInstance.fontRenderer, Str, this.WM$DrawX + X, this.WM$DrawY + Y, Color);
@@ -648,10 +648,10 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DrawString(
-        String Str,
-        int X,
-        int Y,
-        int Color
+        IN String Str,
+        IN int X,
+        IN int Y,
+        IN int Color
         )
     {
         this.drawString(this.MinecraftInstance.fontRenderer, Str, this.WM$DrawX + X, this.WM$DrawY + Y, Color);
@@ -661,12 +661,12 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DrawTexturedModalRectangle(
-        int X,
-        int Y,
-        int U,
-        int V,
-        int Width,
-        int Height
+        IN int X,
+        IN int Y,
+        IN int U,
+        IN int V,
+        IN int Width,
+        IN int Height
         )
     {
         this.drawTexturedModalRect(this.WM$DrawX + X, this.WM$DrawY + Y, U, V, Width, Height);
@@ -684,7 +684,7 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$SetFocusWindow_Internal(
-        int hWindow
+        IN int hWindow
         )
     {
         WINDOWOBJ WindowObj;
@@ -717,7 +717,7 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$SetFocusWindow(
-        int hWindow
+        IN int hWindow
         )
     {
         if (hWindow == 0) this.WM$HasFocusWindow = false;
@@ -728,12 +728,12 @@ public final class CClickGui extends GuiScreen {
     public
     boolean
     WM$IsPointInRectangle(
-        int PointX,
-        int PointY,
-        int RectangleX,
-        int RectangleY,
-        int RectangleWidth,
-        int RectangleHeight
+        IN int PointX,
+        IN int PointY,
+        IN int RectangleX,
+        IN int RectangleY,
+        IN int RectangleWidth,
+        IN int RectangleHeight
         )
     {
         if (PointX >= RectangleX && PointY >= RectangleY && PointX < (RectangleX + RectangleWidth) && PointY < (RectangleY + RectangleHeight)) return true;
@@ -741,32 +741,11 @@ public final class CClickGui extends GuiScreen {
     }
     
     public
-    boolean
-    WM$IsPointInWindow(
-        int PointX,
-        int PointY,
-        int hWindow
-        )
-    {
-        WINDOWOBJ WindowObj;
-        
-        WindowObj = this.WM$WindowList.get(H2I(hWindow));
-        return WM$IsPointInRectangle(
-            PointX,
-            PointY,
-            WindowObj.X,
-            WindowObj.Y,
-            WindowObj.Width,
-            WindowObj.Height
-        );
-    }
-    
-    public
     int
     WM$GetWindowByCoords_Internal(
-        int hParent,
-        int X,
-        int Y
+        IN int hParent,
+        IN int X,
+        IN int Y
         )
     {
         WINDOWOBJ ParentWindowObj;
@@ -800,8 +779,8 @@ public final class CClickGui extends GuiScreen {
     public
     int
     WM$GetWindowByCoords(
-        int X,
-        int Y
+        IN int X,
+        IN int Y
         )
     {
         WINDOWOBJ WindowObj;
@@ -833,8 +812,8 @@ public final class CClickGui extends GuiScreen {
     public
     int
     WM$XCoordToLocal(
-        int X,
-        int hWindow
+        IN int X,
+        IN int hWindow
         )
     {
         WINDOWOBJ WindowObj;
@@ -852,8 +831,8 @@ public final class CClickGui extends GuiScreen {
     public
     int
     WM$YCoordToLocal(
-        int Y,
-        int hWindow
+        IN int Y,
+        IN int hWindow
         )
     {
         WINDOWOBJ WindowObj;
@@ -871,9 +850,9 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$MoveWindow_D(
-        int hWindow,
-        int dX,
-        int dY
+        IN int hWindow,
+        IN int dX,
+        IN int dY
         )
     {
         WINDOWOBJ WindowObj;
@@ -887,9 +866,9 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$MoveWindow_A(
-        int hWindow,
-        int X,
-        int Y
+        IN int hWindow,
+        IN int X,
+        IN int Y
         )
     {
         WINDOWOBJ WindowObj;
@@ -903,7 +882,7 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$DestroyWindow(
-        int hWindow
+        IN int hWindow
         )
     {
         WINDOWOBJ WindowObj;
@@ -932,7 +911,7 @@ public final class CClickGui extends GuiScreen {
     public
     Object
     WM$GetWindowData(
-        int hWindow
+        IN int hWindow
         )
     {
         return this.WM$WindowList.get(H2I(hWindow)).WindowData;
@@ -941,8 +920,8 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$SetWindowData(
-        int hWindow,
-        Object WindowData
+        IN int hWindow,
+        IN Object WindowData OPTIONAL
         )
     {
         this.WM$WindowList.get(H2I(hWindow)).WindowData = WindowData;
@@ -952,10 +931,10 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$CallWindowProcedure(
-        int hWindow,
-        int MessageId,
-        Object wParam,
-        Object lParam
+        IN int hWindow,
+        IN int MessageId,
+        IN OUT Object wParam OPTIONAL,
+        IN OUT Object lParam OPTIONAL
         )
     {
         this.WM$WindowList.get(H2I(hWindow)).ClassObj.WindowProcedure.WindowProcedure(hWindow, MessageId, wParam, lParam);
@@ -965,7 +944,7 @@ public final class CClickGui extends GuiScreen {
     public
     int
     WM$GetParentWindow(
-        int hWindow
+        IN int hWindow
         )
     {
         return this.WM$WindowList.get(H2I(hWindow)).hParent;
@@ -974,9 +953,9 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$ResizeWindow(
-        int hWindow,
-        int Width,
-        int Height
+        IN int hWindow,
+        IN int Width,
+        IN int Height
         )
     {
         WINDOWOBJ WindowObj;
@@ -990,7 +969,7 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$MinimizeWindow(
-        int hWindow
+        IN int hWindow
         )
     {
         WINDOWOBJ WindowObj;
@@ -1008,7 +987,7 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$MaximizeWindow(
-        int hWindow
+        IN int hWindow
         )
     {
         WINDOWOBJ WindowObj;
@@ -1025,9 +1004,9 @@ public final class CClickGui extends GuiScreen {
     public
     void
     WM$GetWindowPosition(
-        int hWindow,
-        O$INTEGER32 X,
-        O$INTEGER32 Y
+        IN int hWindow,
+        OUT O$INTEGER32 X,
+        OUT O$INTEGER32 Y
         )
     {
         WINDOWOBJ WindowObj;
@@ -1041,7 +1020,7 @@ public final class CClickGui extends GuiScreen {
     public
     boolean
     WM$IsWindowMinimized(
-        int hWindow
+        IN int hWindow
         )
     {
         return this.WM$WindowList.get(H2I(hWindow)).IsMinimized;
@@ -1050,7 +1029,7 @@ public final class CClickGui extends GuiScreen {
     public
     String
     WM$GetWindowTitle(
-        int hWindow
+        IN int hWindow
         )
     {
         return this.WM$WindowList.get(H2I(hWindow)).Title;
@@ -1068,10 +1047,10 @@ final class CToggleButton extends ACWindowProcedure {
     public
     void
     WindowProcedure(
-        int hWindow,
-        int MessageId,
-        Object wParam,
-        Object lParam
+        IN int hWindow,
+        IN int MessageId,
+        IN OUT Object wParam OPTIONAL,
+        IN OUT Object lParam OPTIONAL
         )
     {
         CToggleButton_Data Data;
@@ -1106,7 +1085,7 @@ final class CToggleButton extends ACWindowProcedure {
             MouseX = (Integer)wParam;
             MouseY = (Integer)lParam;
             Data = (CToggleButton_Data)this.Services.WM$GetWindowData(hWindow);
-            CClient.BSE$ClientInstance.BSE$ToggleModule(Data.Module);
+            CClient.BSE$ClientInstance.BSE$ExecuteCommand("TOGGLE " + Data.Module.Id);
             break;
         }
         return;
@@ -1119,10 +1098,10 @@ final class CCategoryWindow extends ACWindowProcedure {
     public
     void
     WindowProcedure(
-        int hWindow,
-        int MessageId,
-        Object wParam,
-        Object lParam
+        IN int hWindow,
+        IN int MessageId,
+        IN OUT Object wParam OPTIONAL,
+        IN OUT Object lParam OPTIONAL
         )
     {
         CCategory Category;

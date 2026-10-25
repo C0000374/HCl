@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import io.github.C0000374.HCl.Modules.Player.CNoPush;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -164,6 +165,7 @@ public class NetClientHandler extends NetHandler {
 
     public void handleEntityVelocity(Packet28EntityVelocity var1) {
         Entity var2 = this.getEntityByID(var1.entityId);
+        if ((var2 instanceof EntityPlayerSP) && CNoPush.Instance.IsActive && CNoPush.Instance.NoKnockBack.Value) return;
         if (var2 != null) {
             var2.setVelocity((double)var1.motionX / 8000.0D, (double)var1.motionY / 8000.0D, (double)var1.motionZ / 8000.0D);
         }

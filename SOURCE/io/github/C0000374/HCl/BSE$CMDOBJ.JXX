@@ -32,7 +32,7 @@ public abstract class BSE$CMDOBJ {
     
     public
     abstract
-    void
+    boolean
     Execute(
         IN String[] Arguments,
         IN String Command

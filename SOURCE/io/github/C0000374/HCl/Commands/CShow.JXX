@@ -1,0 +1,45 @@
+package io.github.C0000374.HCl.Commands;
+
+#include <HCL.INC>
+
+import io.github.C0000374.HCl.BSE$CMDOBJ;
+import io.github.C0000374.HCl.BSE$MODOBJ;
+import io.github.C0000374.HCl.BSE$STGOBJ;
+import io.github.C0000374.HCl.CClient;
+
+public final class CShow extends BSE$CMDOBJ {
+
+    public CClient Client;
+    
+    public
+    CShow(
+        IN CClient Client
+        )
+    {
+        super("Show");
+        this.Client = Client;
+        return;
+    }
+    
+    @Override
+    public
+    boolean
+    Execute(
+        IN String[] Arguments,
+        IN String Command
+        )
+    {
+        BSE$MODOBJ Module;
+        BSE$STGOBJ Setting;
+        
+        if (Arguments.length != 3) return false;
+        
+        Module = this.Client.BSE$GetModule(Arguments[1]);
+        if (Module == null) return false;
+        
+        Setting = this.Client.BSE$GetModuleSetting(Module, Arguments[2]);
+        if (Setting == null) return false;
+        CClient.BSE$MinecraftInstance.ingameGUI.addChatMessage("%HCL-I-SHOWCMD, " + Module.Id + "\\" + Setting.Id + " = " + Setting);
+        return true;
+    }
+}

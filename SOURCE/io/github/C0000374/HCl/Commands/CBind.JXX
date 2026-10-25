@@ -39,7 +39,7 @@ public final class CBind extends BSE$CMDOBJ {
     
     @Override
     public
-    void
+    boolean
     Execute(
         IN String[] Arguments,
         IN String Command
@@ -48,22 +48,18 @@ public final class CBind extends BSE$CMDOBJ {
         BSE$MODOBJ Module;
         Field Key;
         
-        if (Arguments.length < 3) this.ClientInstance.BSE$InvalidCommand(Command);
-        else {
-            
-            Module = this.ClientInstance.BSE$GetModule(Arguments[1]);
-            if (Module == null) this.ClientInstance.BSE$InvalidCommand(Command);
-            else {
-                
-                try {
-                    Key = Keyboard.class.getField("KEY_" + Arguments[2].toUpperCase());
-                    Module.KeyBinding = (Integer)Key.get(null);
-                }
-                catch (Exception e) {
-                    this.ClientInstance.BSE$InvalidCommand(Command);
-                }
-            }
+        if (Arguments.length != 3) return false;
+        
+        Module = this.ClientInstance.BSE$GetModule(Arguments[1]);
+        if (Module == null) return false;
+        
+        try {
+            Key = Keyboard.class.getField("KEY_" + Arguments[2].toUpperCase());
+            Module.KeyBinding = (Integer)Key.get(null);
         }
-        return;
+        catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

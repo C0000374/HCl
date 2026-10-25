@@ -1,5 +1,7 @@
 package io.github.C0000374.HCl.Gui;
 
+#include <HCL.INC>
+
 import io.github.C0000374.HCl.BSE$MODOBJ;
 import java.util.ArrayList;
 
@@ -11,9 +13,9 @@ public final class CCategory {
     
     public
     CCategory(
-        String Id,
-        int ColoUWUr,
-        BSE$MODOBJ[] Modules
+        IN String Id,
+        IN int ColoUWUr,
+        IN BSE$MODOBJ[] Modules
         )
     {
         int I;

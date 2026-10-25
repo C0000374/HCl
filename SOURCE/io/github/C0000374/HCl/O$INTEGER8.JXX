@@ -7,7 +7,7 @@ public final class O$INTEGER8 {
     
     public
     O$INTEGER8(
-        byte Value
+        IN byte Value
         )
     {
         this.Value = Value;

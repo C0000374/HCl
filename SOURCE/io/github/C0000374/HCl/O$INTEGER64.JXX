@@ -7,7 +7,7 @@ public final class O$INTEGER64 {
     
     public
     O$INTEGER64(
-        long Value
+        IN long Value
         )
     {
         this.Value = Value;
