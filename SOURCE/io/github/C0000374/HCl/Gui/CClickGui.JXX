@@ -113,6 +113,7 @@ public final class CClickGui extends GuiScreen {
         int hWindow;
         NBTTagCompound ClickGuiTag;
         NBTTagCompound WindowTag;
+        boolean IsMinimized;
         
         this.MinecraftInstance = MinecraftInstance;
         Instance = this;
@@ -140,18 +141,15 @@ public final class CClickGui extends GuiScreen {
             );
             this.UI$CategoriesList.add(hWindow);
             
-            if (ClickGuiTag.hasKey(Category.Id) && (ClickGuiTag.GetTag(Category.Id) instanceof NBTTagCompound)) {
+            if (BSE$DoesTagExist(ClickGuiTag, Category.Id, NBTTagCompound)) {
                 WindowTag = ClickGuiTag.getCompoundTag(Category.Id);
                 
-                if (
-                    (WindowTag.hasKey("X") && (WindowTag.GetTag("X") instanceof NBTTagInt)) &&
-                    (WindowTag.hasKey("Y") && (WindowTag.GetTag("Y") instanceof NBTTagInt))
-                    ) this.WM$MoveWindow_A(hWindow, WindowTag.getInteger("X"), WindowTag.getInteger("Y"));
+                if (BSE$DoesTagExist(WindowTag, "X", NBTTagInt) && BSE$DoesTagExist(WindowTag, "Y", NBTTagInt))
+                    this.WM$MoveWindow_A(hWindow, WindowTag.getInteger("X"), WindowTag.getInteger("Y"));
                 
-                if (
-                    (WindowTag.hasKey("IsMinimized") && (WindowTag.GetTag("IsMinimized") instanceof NBTTagByte)) &&
-                    WindowTag.getBoolean("IsMinimized")
-                    ) this.WM$MinimizeWindow(hWindow);
+				IsMinimized = false;
+                BSE$GetBoolean(WindowTag, "IsMinimized", IsMinimized);
+                if (IsMinimized) this.WM$MinimizeWindow(hWindow);
             }
             else this.WM$MinimizeWindow(hWindow);
         }

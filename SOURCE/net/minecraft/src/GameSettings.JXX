@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+#include <HCL.INC>
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -35,6 +37,9 @@ public class GameSettings {
     public KeyBinding keyBindChat = new KeyBinding("key.chat", 20);
     public KeyBinding keyBindToggleFog = new KeyBinding("key.fog", 33);
     public KeyBinding keyBindSneak = new KeyBinding("key.sneak", 42);
+    public KeyBinding KeyBindConsole = new KeyBinding("KEY$CONSOLE", Keyboard.KEY_Y);
+    public KeyBinding KeyBindClickGui = new KeyBinding("KEY$CLICKGUI", Keyboard.KEY_RSHIFT);
+    public KeyBinding KeyBindList = new KeyBinding("key.playerlist", Keyboard.KEY_TAB);
     public KeyBinding[] keyBindings;
     protected Minecraft mc;
     private File optionsFile;
@@ -51,25 +56,28 @@ public class GameSettings {
     public int guiScale;
 
     public GameSettings(Minecraft var1, File var2) {
-        this.keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindToggleFog};
-        this.difficulty = 2;
-        this.hideGUI = false;
-        this.thirdPersonView = false;
-        this.showDebugInfo = false;
-        this.lastServer = "";
-        this.noclip = false;
-        this.smoothCamera = false;
-        this.debugCamEnable = false;
-        this.noclipRate = 1.0F;
-        this.debugCamRate = 1.0F;
-        this.guiScale = 0;
+        this();
         this.mc = var1;
         this.optionsFile = new File(var2, "options.txt");
         this.loadOptions();
     }
 
     public GameSettings() {
-        this.keyBindings = new KeyBinding[]{this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindToggleFog};
+        this.keyBindings = new KeyBinding[]{
+            this.keyBindForward,
+            this.keyBindLeft,
+            this.keyBindBack,
+            this.keyBindRight,
+            this.keyBindJump,
+            this.keyBindSneak,
+            this.keyBindDrop,
+            this.keyBindInventory,
+            this.keyBindChat,
+            this.keyBindToggleFog,
+            this.KeyBindConsole,
+            this.KeyBindClickGui,
+            this.KeyBindList
+        };
         this.difficulty = 2;
         this.hideGUI = false;
         this.thirdPersonView = false;
@@ -94,7 +102,7 @@ public class GameSettings {
 
     public void setKeyBinding(int var1, int var2) {
         this.keyBindings[var1].keyCode = var2;
-        this.saveOptions();
+        //this.saveOptions();
     }
 
     public void setOptionFloatValue(EnumOptions var1, float var2) {
@@ -159,7 +167,7 @@ public class GameSettings {
             this.mc.renderGlobal.loadRenderers();
         }
 
-        this.saveOptions();
+        //this.saveOptions();
     }
 
     public float getOptionFloatValue(EnumOptions var1) {
@@ -222,6 +230,9 @@ public class GameSettings {
     }
 
     public void loadOptions() {
+        
+        if (this.ReadFromNbt()) return;
+        
         try {
             if (!this.optionsFile.exists()) {
                 return;
@@ -319,7 +330,7 @@ public class GameSettings {
         }
     }
 
-    public void saveOptions() {
+    public void saveOptions() { // unused method
         try {
             PrintWriter var1 = new PrintWriter(new FileWriter(this.optionsFile));
             var1.println("music:" + this.musicVolume);
@@ -348,5 +359,68 @@ public class GameSettings {
             var3.printStackTrace();
         }
 
+    }
+    
+    public
+    void
+    WriteToNbt(
+        OUT NBTTagCompound CompoundTag
+        )
+    {
+        int i;
+        
+        CompoundTag.setFloat("music", this.musicVolume);
+        CompoundTag.setFloat("sound", this.soundVolume);
+        CompoundTag.setBoolean("invertYMouse", this.invertMouse);
+        CompoundTag.setFloat("mouseSensitivity", this.mouseSensitivity);
+        CompoundTag.setInteger("viewDistance", this.renderDistance);
+        CompoundTag.setInteger("guiScale", this.guiScale);
+        CompoundTag.setBoolean("bobView", this.viewBobbing);
+        CompoundTag.setBoolean("anaglyph3d", this.anaglyph);
+        CompoundTag.setBoolean("advancedOpengl", this.advancedOpengl);
+        CompoundTag.setInteger("fpsLimit", this.limitFramerate);
+        CompoundTag.setInteger("difficulty", this.difficulty);
+        CompoundTag.setBoolean("fancyGraphics", this.fancyGraphics);
+        CompoundTag.setBoolean("ao", this.ambientOcclusion);
+        CompoundTag.setString("skin", this.skin);
+        CompoundTag.setString("lastServer", this.lastServer);
+        
+        for (i = 0; i < this.keyBindings.length; i++)
+            CompoundTag.setInteger("key_" + this.keyBindings[i].keyDescription, this.keyBindings[i].keyCode);
+        return;
+    }
+    
+    public
+    boolean
+    ReadFromNbt(
+        )
+    {
+        NBTTagCompound CompoundTag;
+        int i;
+        
+        CompoundTag = this.mc.Client.GameSettingsTag;
+        if (CompoundTag == null) return false;
+        
+        this.mc.Client.GameSettingsTag = null;
+        
+        BSE$GetFloat(CompoundTag, "music", this.musicVolume);
+        BSE$GetFloat(CompoundTag, "sound", this.soundVolume);
+        BSE$GetBoolean(CompoundTag, "invertYMouse", this.invertMouse);
+        BSE$GetFloat(CompoundTag, "mouseSensitivity", this.mouseSensitivity);
+        BSE$GetInt(CompoundTag, "viewDistance", this.renderDistance);
+        BSE$GetInt(CompoundTag, "guiScale", this.guiScale);
+        BSE$GetBoolean(CompoundTag, "bobView", this.viewBobbing);
+        BSE$GetBoolean(CompoundTag, "anaglyph3d", this.anaglyph);
+        BSE$GetBoolean(CompoundTag, "advancedOpengl", this.advancedOpengl);
+        BSE$GetInt(CompoundTag, "fpsLimit", this.limitFramerate);
+        BSE$GetInt(CompoundTag, "difficulty", this.difficulty);
+        BSE$GetBoolean(CompoundTag, "fancyGraphics", this.fancyGraphics);
+        BSE$GetBoolean(CompoundTag, "ao", this.ambientOcclusion);
+        BSE$GetString(CompoundTag, "skin", this.skin);
+        BSE$GetString(CompoundTag, "lastServer", this.lastServer);
+        
+        for (i = 0; i < this.keyBindings.length; i++)
+            BSE$GetInt(CompoundTag, "key_" + this.keyBindings[i].keyDescription, this.keyBindings[i].keyCode);
+        return true;
     }
 }

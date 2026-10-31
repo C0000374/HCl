@@ -63,6 +63,15 @@ public class GuiChat extends GuiScreen {
         }
 
     }
+    
+    @Override
+    public
+    boolean
+    doesGuiPauseGame(
+        )
+    {
+        return false;
+    }
 
     static {
         allowedCharacters = ChatAllowedCharacters.allowedCharacters;

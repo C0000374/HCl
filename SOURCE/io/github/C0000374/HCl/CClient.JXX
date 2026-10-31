@@ -57,6 +57,7 @@ public final class CClient {
     public HashMap<String, BSE$CMDOBJ> BSE$Commands = new HashMap<>();
     public HashMap<String, CCategory> Categories = new HashMap<>();
     public NBTTagCompound UI$NbtTag = new NBTTagCompound();
+    public NBTTagCompound GameSettingsTag = null;
     public boolean DontRenderUsernames = false;
     
     public
@@ -180,7 +181,7 @@ public final class CClient {
             // Read the modules configuration.
             //-
             
-            if (ClientConfigurationCompoundTag.hasKey("Modules") && (ClientConfigurationCompoundTag.GetTag("Modules") instanceof NBTTagCompound)) {
+            if (BSE$DoesTagExist(ClientConfigurationCompoundTag, "Modules", NBTTagCompound)) {
                 
                 ModulesCompoundTag = ClientConfigurationCompoundTag.getCompoundTag("Modules");
                 i = this.BSE$Modules.values().iterator();
@@ -191,9 +192,9 @@ public final class CClient {
                         this.BSE$ReadModuleFromNbt(Module, ModulesCompoundTag.getCompoundTag(Module.Id));
                 }
             }
-            
-            if (ClientConfigurationCompoundTag.hasKey("ClickGui") && (ClientConfigurationCompoundTag.GetTag("ClickGui") instanceof NBTTagCompound))
-                this.UI$NbtTag = ClientConfigurationCompoundTag.getCompoundTag("ClickGui");
+                
+            BSE$GetCompound(ClientConfigurationCompoundTag, "ClickGui", this.UI$NbtTag);
+            BSE$GetCompound(ClientConfigurationCompoundTag, "GameSettings", this.GameSettingsTag);
         }
         return;
     }
@@ -221,6 +222,7 @@ public final class CClient {
         Iterator<BSE$MODOBJ> i;
         BSE$MODOBJ Module;
         NBTTagCompound ClickGuiTag;
+        NBTTagCompound GameSettings;
         
         ClientConfigurationCompoundTag = new NBTTagCompound();
         
@@ -248,6 +250,14 @@ public final class CClient {
         ClickGuiTag = new NBTTagCompound();
         BSE$MinecraftInstance.ClickGui.UI$SaveConfiguration(ClickGuiTag);
         ClientConfigurationCompoundTag.setCompoundTag("ClickGui", ClickGuiTag);
+        
+        //+
+        // Write game settings.
+        //-
+        
+        GameSettings = new NBTTagCompound();
+        BSE$MinecraftInstance.gameSettings.WriteToNbt(GameSettings);
+        ClientConfigurationCompoundTag.setCompoundTag("GameSettings", GameSettings);
         
         //+
         // Write the NBT data to the NBT$CH_C.GZ file.

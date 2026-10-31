@@ -1073,12 +1073,13 @@ public abstract class Minecraft implements Runnable {
                                                     this.thePlayer.dropCurrentItem();
                                                 }
 
-                                                if (this.isMultiplayerWorld() && Keyboard.getEventKey() == this.gameSettings.keyBindChat.keyCode) {
+                                                if (Keyboard.getEventKey() == this.gameSettings.keyBindChat.keyCode) {
                                                     this.displayGuiScreen(new GuiChat());
                                                 }
                                                 
-                                                if (Keyboard.getEventKey() == Keyboard.KEY_Y) this.displayGuiScreen(new CConsole());
-                                                if (Keyboard.getEventKey() == Keyboard.KEY_RSHIFT) this.displayGuiScreen(this.ClickGui);
+                                                if (Keyboard.getEventKey() == this.gameSettings.KeyBindConsole.keyCode) this.displayGuiScreen(new CConsole());
+                                                if (Keyboard.getEventKey() == this.gameSettings.KeyBindClickGui.keyCode) this.displayGuiScreen(this.ClickGui);
+                                                if (Keyboard.getEventKey() == this.gameSettings.KeyBindList.keyCode) this.thePlayer.sendChatMessage("/list");
                                                 
                                                 this.Client.UI$HandleKeyEvent(Keyboard.getEventKey());
                                             }

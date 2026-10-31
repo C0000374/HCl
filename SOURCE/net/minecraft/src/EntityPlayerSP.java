@@ -158,6 +158,12 @@ public class EntityPlayerSP extends EntityPlayer {
     }
 
     public void sendChatMessage(String var1) {
+        if (var1.startsWith("/")) {
+            if (var1.startsWith("/help")) this.mc.ingameGUI.addChatMessage("Commands: /help, /list");
+            else if (var1.startsWith("/list")) this.mc.ingameGUI.addChatMessage("You are alone.");
+            else this.mc.ingameGUI.addChatMessage("Unknown command!");
+        }
+        else this.mc.ingameGUI.addChatMessage("<" + this.username + "> " + var1);
     }
 
     public boolean isSneaking() {

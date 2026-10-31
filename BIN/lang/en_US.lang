@@ -124,6 +124,8 @@ key.chat=Chat
 key.fog=Toggle Fog
 key.sneak=Sneak
 key.playerlist=List players
+KEY$CONSOLE=Console
+KEY$CLICKGUI=Click GUI
 
 texturePack.openFolder=Open texture pack folder
 texturePack.title=Select Texture Pack

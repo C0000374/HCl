@@ -42,6 +42,9 @@ public class GuiIngame extends Gui {
         int i;
         int j;
         ArrayList<BSE$MODOBJ> ActiveModules;
+        Item _Item;
+        ItemStack _ItemStack;
+        String Durability;
         
         ScaledResolution var5 = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
         int var6 = var5.getScaledWidth();
@@ -211,6 +214,26 @@ public class GuiIngame extends Gui {
         }
         else {
             var8.drawStringWithShadow("HCl " + CClient.Version, 2, 2, 0xFFFFFF);
+            
+            _ItemStack = this.mc.thePlayer.inventory.getCurrentItem_ForRenderer();
+            if (_ItemStack != null) {
+                _Item = _ItemStack.getItem();
+                if (
+                    (_Item instanceof ItemFishingRod) ||
+                    (_Item instanceof ItemFlintAndSteel) ||
+                    (_Item instanceof ItemHoe) ||
+                    (_Item instanceof ItemShears) ||
+                    (_Item instanceof ItemSword) ||
+                    (_Item instanceof ItemTool)
+                ) {
+                    Durability = "Tool durability: ";
+                    if (this.mc.thePlayer.inventory.currentItem >= 9) Durability += "INFINITY";
+                    else if (_ItemStack.stackSize > 0) Durability += "" + (_Item.getMaxDamage() * _ItemStack.stackSize - _ItemStack.getItemDamage());
+                    else if (_ItemStack.stackSize < 0) Durability += "" + (_Item.getMaxDamage() - _ItemStack.getItemDamage());
+                    else Durability += "0";
+                    var8.drawStringWithShadow(Durability, 2, 12, 0x00FFFFFF);
+                }
+            }
             
             if (CShowCoordinates.Instance.IsActive) {
                 

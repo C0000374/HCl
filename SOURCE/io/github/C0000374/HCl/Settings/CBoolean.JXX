@@ -39,8 +39,7 @@ public final class CBoolean extends BSE$STGOBJ {
         IN NBTTagCompound CompoundTag
         )
     {
-        if (CompoundTag.hasKey(this.Id) && (CompoundTag.GetTag(this.Id) instanceof NBTTagByte))
-            this.Value = CompoundTag.getBoolean(this.Id);
+        BSE$GetBoolean(CompoundTag, this.Id, this.Value);
         return;
     }
     
